@@ -1,0 +1,20 @@
+enum UserRole {
+    Customer
+    Vendor
+}
+
+model User {
+    fields {
+        identity Identity @unique
+        name Text
+        role UserRole @default(UserRole.Customer)
+        photoUrl Text?
+    }
+
+    actions {
+        create createUser() with (name, role) {
+            @set(user.identity = ctx.identity)
+            @permission(expression: ctx.isAuthenticated)
+        }
+    }
+}
