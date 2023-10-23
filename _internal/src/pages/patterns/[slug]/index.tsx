@@ -6,6 +6,7 @@ import Link from "next/link";
 import { PageWrapper } from "@/layouts/Wrapper";
 import { Tag } from "../../../components/Tag";
 import { Markdown } from "@/components/Markdown";
+import { ContentLayout } from "@/layouts/ContentLayout";
 
 export const getStaticPaths = (async () => {
   const data = await loadData();
@@ -46,27 +47,25 @@ export default function Page(
           &#8249; All patterns
         </Link>
       </div>
-      <div className="flex w-full max-w-6xl gap-12">
-        <aside className="w-2/5">
+      <ContentLayout.Root>
+        <ContentLayout.Aside>
           <div className="flex gap-3 mb-4">
             {props?.tags?.map((t) => (
               <Tag key={t}>{t}</Tag>
             ))}
           </div>
           <Markdown>{props?.readme}</Markdown>
-        </aside>
-        <main className="w-3/5">
+        </ContentLayout.Aside>
+        <ContentLayout.Main>
           <TabbedContent
-            files={props.files
-              // .filter((f) => f.name != "readme.md")
-              .map((file) => ({
-                content: file.highlightedContent || file.contents,
-                title: file.name,
-                rawContent: file.contents,
-              }))}
+            files={props.files.map((file) => ({
+              content: file.highlightedContent || file.contents,
+              title: file.name,
+              rawContent: file.contents,
+            }))}
           />
-        </main>
-      </div>
+        </ContentLayout.Main>
+      </ContentLayout.Root>
     </PageWrapper>
   );
 }
