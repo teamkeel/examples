@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Recursive";
+  font-weight: 300 1000;
+  font-variant: "MONO" 1;
+  font-feature-settings: "ss03", "ss05", "ss08", "ss12", "ss10";
+  src: local(""),
+    url("/fonts/Recursive_VF_1.084.woff2") format("woff2-variations"); /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  background: #faf7f6;
+  padding: 24px;
+}
+
+.lineNumbers code {
+  counter-reset: line;
+}
+
+.lineNumbers code span.line:before {
+  counter-increment: line;
+  content: counter(line) / "";
+
+  display: inline-block;
+  width: 16px;
+  margin-right: 12px;
+  color: #abb1c8;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-HeavyItalic.woff2") format("woff2"),
+    url("/fonts/Family-HeavyItalic.woff") format("woff");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-Light.woff2") format("woff2"),
+    url("/fonts/Family-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-BlackItalic.woff2") format("woff2"),
+    url("/fonts/Family-BlackItalic.woff") format("woff");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-BoldItalic.woff2") format("woff2"),
+    url("/fonts/Family-BoldItalic.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-Heavy.woff2") format("woff2"),
+    url("/fonts/Family-Heavy.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-MediumItalic.woff2") format("woff2"),
+    url("/fonts/Family-MediumItalic.woff") format("woff");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-Regular.woff2") format("woff2"),
+    url("/fonts/Family-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-LightItalic.woff2") format("woff2"),
+    url("/fonts/Family-LightItalic.woff") format("woff");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-Black.woff2") format("woff2"),
+    url("/fonts/Family-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-Bold.woff2") format("woff2"),
+    url("/fonts/Family-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-Medium.woff2") format("woff2"),
+    url("/fonts/Family-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Family";
+  src: url("/fonts/Family-RegularItalic.woff2") format("woff2"),
+    url("/fonts/Family-RegularItalic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}

@@ -1,0 +1,18 @@
+model Account {
+    fields {
+        identity Identity @unique
+        name Text
+        email Text
+    }
+
+    actions {
+        get myAccount() {
+            @where(ctx.identity == account.identity)
+        }
+    }
+
+    @permission(
+        actions: [get, create, update, delete],
+        expression: ctx.identity == account.identity
+    )
+}
