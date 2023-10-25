@@ -10,6 +10,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      apps: data.apps,
       guides: guideCategories,
       patterns: data["patterns"],
     },
@@ -60,14 +61,19 @@ export default function Home(
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full mt-5">
-          {["Twitter clone", "SaaS starter", "Todo app"].map((s) => (
+          {props.apps.map((s) => (
             <Link
-              href="#"
-              key={s}
-              className="min-h-[150px] flex items-end bg-sand hover:bg-sand-dark rounded-lg p-5 flex-1"
+              href={`/apps/${s.slug}`}
+              key={s.slug}
+              className="min-h-[150px] grid gap-4 bg-sand hover:bg-sand-dark rounded-lg p-5 flex-1"
             >
+              <img
+                alt={s.title}
+                src={`/api/app-image?s=${s.slug}`}
+                className="w-full rounded shadow"
+              />
               <p className="text-lg font-semibold text-primary leading-none">
-                {s}
+                {s.title}
               </p>
             </Link>
           ))}
