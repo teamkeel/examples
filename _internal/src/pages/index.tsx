@@ -41,6 +41,7 @@ const CategoryBlock = (props: {
 export default function Home(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
+  const hasApps = props.apps.length > 0;
   return (
     <PageWrapper>
       <section className="mt-7 w-full">
@@ -61,22 +62,28 @@ export default function Home(
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full mt-5">
-          {props.apps.map((s) => (
-            <Link
-              href={`/apps/${s.slug}`}
-              key={s.slug}
-              className="min-h-[150px] grid gap-4 bg-sand hover:bg-sand-dark rounded-lg p-5 flex-1"
-            >
-              <img
-                alt={s.title}
-                src={`/api/app-image?s=${s.slug}`}
-                className="w-full rounded shadow"
-              />
-              <p className="text-lg font-semibold text-primary leading-none">
-                {s.title}
-              </p>
-            </Link>
-          ))}
+          {hasApps ? (
+            props.apps.map((s) => (
+              <Link
+                href={`/apps/${s.slug}`}
+                key={s.slug}
+                className="min-h-[150px] grid gap-4 bg-sand hover:bg-sand-dark rounded-lg p-5 flex-1"
+              >
+                <img
+                  alt={s.title}
+                  src={`/api/app-image?s=${s.slug}`}
+                  className="w-full rounded shadow"
+                />
+                <p className="text-lg font-semibold text-primary leading-none">
+                  {s.title}
+                </p>
+              </Link>
+            ))
+          ) : (
+            <div className="min-h-[150px] items-center justify-center text-lg font-semibold text-primary leading-none grid gap-4 bg-sand hover:bg-sand-dark rounded-lg p-5 flex-1">
+              No apps yet
+            </div>
+          )}
         </div>
       </section>
 
