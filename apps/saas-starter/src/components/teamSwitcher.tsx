@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
@@ -33,7 +31,7 @@ import {
 } from '@/components/ui/dialog';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useUser } from '@/lib/userContext';
-import { useKeel } from '@/app/layout';
+import { useKeel } from './Providers';
 
 const groups = [
   {

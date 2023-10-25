@@ -1,4 +1,3 @@
-'use client';
 import { PropsWithChildren, useMemo, useState, useEffect, useRef } from 'react';
 import TeamSwitcher from '../../components/teamSwitcher';
 import {
@@ -32,7 +31,7 @@ import {
 import { Input } from '@/components/ui/input';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useParams } from 'next/navigation';
-import { useKeel } from '../layout';
+import { useKeel } from '@/components/Providers';
 
 export default function SidebarLayout({
   children,

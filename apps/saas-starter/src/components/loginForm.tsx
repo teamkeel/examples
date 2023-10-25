@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -11,7 +9,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '../lib/userContext';
-import { useKeel } from '@/app/layout';
+import { useKeel } from './Providers';
 
 export function LoginForm(className: any, ...props: any[]) {
   const { token, setToken } = useUser();
@@ -111,7 +109,7 @@ export function LoginForm(className: any, ...props: any[]) {
           </div>
           <Button disabled={isLoading}>
             {isLoading ? (
-              <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
+              <UpdateIcon className="w-4 h-4 mr-2 animate-spin" />
             ) : (
               'Login'
             )}
@@ -124,7 +122,7 @@ export function LoginForm(className: any, ...props: any[]) {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">Or</span>
+          <span className="px-2 bg-background text-muted-foreground">Or</span>
         </div>
       </div>
       <Link

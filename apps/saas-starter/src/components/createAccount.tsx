@@ -1,16 +1,17 @@
 'use client';
+
 import * as React from 'react';
 import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { UpdateIcon } from '@radix-ui/react-icons';
 
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/lib/userContext';
-import { useKeel } from '@/app/layout';
+import { useKeel } from './Providers';
 
 export function CreateAccount({ className, ...props }: { className?: string }) {
   const { setToken } = useUser();
@@ -123,7 +124,7 @@ export function CreateAccount({ className, ...props }: { className?: string }) {
           </div>
           <Button disabled={isLoading}>
             {isLoading ? (
-              <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
+              <UpdateIcon className="w-4 h-4 mr-2 animate-spin" />
             ) : (
               'Create account'
             )}

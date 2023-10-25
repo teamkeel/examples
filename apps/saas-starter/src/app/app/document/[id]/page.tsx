@@ -1,13 +1,11 @@
-'use client';
-
 import { useState, useEffect, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import { useUser } from '@/lib/userContext';
 import { Button } from '@/components/ui/button';
 import debounce from '@/lib/debounce';
 import { Input } from '@/components/ui/input';
-import { useKeel } from '@/app/layout';
 import '../../../../styles/_textEditor.css';
+import { useKeel } from '@/components/Providers';
 
 export default function DocumentPage({ params }: { params: { id: string } }) {
   const id = params.id;
