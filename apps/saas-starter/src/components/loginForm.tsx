@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -125,10 +127,7 @@ export function LoginForm(className: any, ...props: any[]) {
           <span className="px-2 bg-background text-muted-foreground">Or</span>
         </div>
       </div>
-      <Link
-        href="/examples/authentication"
-        className={cn(buttonVariants({ variant: 'outline' }))}
-      >
+      <Link href="/" className={cn(buttonVariants({ variant: 'outline' }))}>
         Sign up now
       </Link>
     </div>
