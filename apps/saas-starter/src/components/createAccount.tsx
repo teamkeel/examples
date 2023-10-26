@@ -36,38 +36,42 @@ export function CreateAccount({ className, ...props }: { className?: string }) {
         createIfNotExists: true,
       });
 
-      setToken(response.data?.token as string);
-      keel.client.setToken((response as any).data.token);
-
-      if (response && (response as any).data.token) {
-        const userName = formData.email.split('@')[0];
-        await keel.api.mutations.createUser({
-          name: userName,
-          email: formData.email,
-        });
-        const teamName = `${
-          userName.charAt(0).toUpperCase() + userName.slice(1)
-        }'s Team`;
-        const userId = await keel.api.queries.me();
-        await keel.api.mutations.createTeam({
-          team: {
-            name: teamName,
-            description: `Default team for ${userName}`,
-          },
-          user: {
-            id: userId.data?.id as string,
-          },
-        });
-
-        // Navigate to the app page after successful signup
-        router.push('/app');
-        console.log('Account created successfully');
-      } else {
+      if (!response.data) {
         setFormData((prevState: any) => ({
           ...prevState,
           error: `${response.error}`,
         }));
+        throw new Error('No response');
       }
+
+      setToken(response.data.token);
+      keel.client.setToken(response.data.token);
+
+      const [username] = formData.email.split('@');
+
+      await keel.api.mutations.createUser({
+        name: username,
+        email: formData.email,
+      });
+
+      const teamName = `${
+        username.charAt(0).toUpperCase() + username.slice(1)
+      }'s Team`;
+
+      const userId = await keel.api.queries.me();
+      await keel.api.mutations.createTeam({
+        team: {
+          name: teamName,
+          description: `Default team for ${username}`,
+        },
+        user: {
+          id: userId.data?.id as string,
+        },
+      });
+
+      // Navigate to the app page after successful signup
+      router.push('/app');
+      console.log('Account created successfully');
     } catch (error) {
       setFormData((prevState: any) => ({
         ...prevState,
@@ -126,7 +130,7 @@ export function CreateAccount({ className, ...props }: { className?: string }) {
             {isLoading ? (
               <UpdateIcon className="w-4 h-4 mr-2 animate-spin" />
             ) : (
-              'Create account'
+              'Create Account'
             )}
           </Button>
         </div>
