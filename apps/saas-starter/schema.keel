@@ -1,10 +1,8 @@
-// User Model
 model User {
     fields {
         identity Identity @unique
         name Text
         email Text
-        teams TeamMembership[]
         documents Document[]
     }
 
@@ -29,31 +27,29 @@ model User {
     )
 }
 
-// Team Model
 model Team {
     fields {
         name Text
         description Text?
-        members TeamMembership[]
         documents Document[]
+        owner Identity
     }
 
     actions {
         get getTeam(id)
-        list listTeams() {
-            @where(ctx.identity in team.members.user.identity)
-        }
+        list listTeams()
         delete deleteTeam(id)
         update updateTeam(id) with (name?, description?)
     }
 
+    @unique([owner, name])
+
     @permission(
         actions: [get, list, update, delete],
-        expression: ctx.identity in team.members.user.identity
+        expression: ctx.isAuthenticated
     )
 }
 
-// Team Membership Model
 model TeamMembership {
     fields {
         user User
@@ -61,13 +57,13 @@ model TeamMembership {
     }
 
     actions {
-        create createTeam() with (team.name, team.description, user.id) {
+        create createTeamMembership() with (team.name, team.description, user.id) {
             @permission(expression: ctx.isAuthenticated)
+            @set(teamMembership.team.owner = ctx.identity)
         }
     }
 }
 
-// Document Model
 model Document {
     fields {
         title Text
@@ -77,11 +73,11 @@ model Document {
     }
 
     actions {
-        get getDocument(id, user.id) {
+        get getDocument(id) {
             @permission(expression: document.user.identity == ctx.identity)
         }
-        list listDocuments(user.id?, team.id?) {
-            @where(document.user.identity == ctx.identity or ctx.identity in document.team.members.user.identity)
+        list listDocuments(team.id) {
+            @permission(expression: document.user.identity == ctx.identity)
         }
         delete deleteDocument(id, user.id?, team.id?) {
             @permission(expression: document.user.identity == ctx.identity)
@@ -94,11 +90,10 @@ model Document {
 
     @permission(
         actions: [get, list, update, delete],
-        expression: document.user.identity == ctx.identity or ctx.identity in document.team.members.user.identity
+        expression: document.user.identity == ctx.identity
     )
 }
 
-// Profile Image Model
 model ProfileImage {
     fields {
         path Text @unique
@@ -119,7 +114,7 @@ model ProfileImage {
 
     @permission(
         actions: [get, delete, list],
-        expression: profileImage.user.identity == ctx.identity or ctx.identity in profileImage.team.members.user.identity
+        expression: profileImage.user.identity == ctx.identity
     )
 }
 
@@ -131,4 +126,30 @@ message UploadImageInput {
 
 message UploadImageResponse {
     path Text
+}
+
+model Invitation {
+    fields {
+        team Team
+        email Text
+        expiry Timestamp
+    }
+
+    actions {
+        list activeInvites() {
+            @where(invitation.expiry > ctx.now)
+            @permission(expression: ctx.isAuthenticated)
+        }
+        create createInvite() with (email, team.id, expiry) @function
+    }
+
+    @permission(
+        actions: [create, get, update],
+        expression: ctx.isAuthenticated
+    )
+}
+
+job PruneDatabase {
+    @schedule("0 0 ? * * *")
+    @permission(expression: true)
 }

@@ -10,12 +10,8 @@ import { UpdateIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser } from '../lib/userContext';
-import { useKeel } from './Providers';
 
 export function LoginForm(className: any, ...props: any[]) {
-  const { token, setToken } = useUser();
-  const keel = useKeel();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
@@ -24,48 +20,13 @@ export function LoginForm(className: any, ...props: any[]) {
     error: '',
   });
 
-  const handleLogin = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      const response = await keel.api.mutations.authenticate({
-        emailPassword: {
-          email: formData.email,
-          password: formData.password,
-        },
-        createIfNotExists: false,
-      });
-
-      const token = response.data?.token;
-
-      if (response && (response as any).data.token) {
-        // Navigate to the app page after successful login
-        router.push('/app');
-        console.log('logged in successfully');
-        keel.client.setToken((response as any).data.token);
-        setToken(token as string);
-      } else {
-        setFormData((prevState: any) => ({
-          ...prevState,
-          error: `${response.error}`,
-        }));
-      }
-    } catch (error) {
-      setFormData((prevState: any) => ({
-        ...prevState,
-        error: 'An error occurred. Please try again.',
-      }));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const clearError = () => {
     setFormData((prevState: any) => ({ ...prevState, error: '' }));
   };
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
+      {/* @ts-ignore */}
       <form onSubmit={handleLogin}>
         <div className="grid gap-4">
           <div className="grid gap-2">

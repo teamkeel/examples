@@ -1,10 +1,22 @@
 import Link from 'next/link';
-import { buttonVariants } from '../components/ui/button';
-import { cn } from '../lib/utils';
-import { CreateAccount } from '../components/createAccount';
-import { randomQuote } from '../lib/randomQuote';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { CreateAccount } from '@/components/CreateAccount';
+import { randomQuote } from '@/lib/randomQuote';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { keelClient } from '@/util/clients';
 
-export default function Signup() {
+export default async function Signup() {
+  if (cookies().get('keel.auth')) {
+    const token = cookies().get('keel.auth')!.value;
+    keelClient.client.setToken(token);
+    const response = await keelClient.api.queries.listTeams();
+    if (response.data && response.data.results.length) {
+      redirect(`/${response.data.results[0].id}`);
+    }
+  }
+
   return (
     <div className="flex min-h-screen">
       <Link

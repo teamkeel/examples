@@ -1,9 +1,11 @@
 import { Providers } from '@/components/Providers';
 import '../styles/globals.css';
+import { cookies } from 'next/headers';
 
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   title: 'Keel SaaS Starter',
   description: 'The next big SaaS tool',
 };

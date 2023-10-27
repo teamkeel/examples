@@ -48,7 +48,6 @@ export default function LoginPage() {
                 Enter your email and password to continue
               </p>
             </div>
-            {/* <UserAuthForm /> */}
             <LoginForm />
             <p className="px-8 text-sm text-center text-muted-foreground">
               By clicking continue, you agree to our{' '}
