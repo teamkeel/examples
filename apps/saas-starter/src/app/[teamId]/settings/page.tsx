@@ -4,16 +4,8 @@ import { Button } from '../../../components/ui/button';
 import { TeamDetailsForm } from './forms/teamDetailsForm';
 import { Billing } from './forms/billing';
 import { TeamMembers } from './forms/members';
-import { useProtectedRoute } from '@/components/hooks/useProtectedRoute';
-import { useUser } from '@/lib/userContext';
 
 export default function TeamSettings({ params }: { params: { id: string } }) {
-  const { loading } = useUser();
-  useProtectedRoute();
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <PageWrap>
       <h2 className="text-xl font-bold">Team settings</h2>

@@ -9,8 +9,6 @@ import { keelClient } from '@/util/clients';
 
 export default async function Signup() {
   if (cookies().get('keel.auth')) {
-    const token = cookies().get('keel.auth')!.value;
-    keelClient.client.setToken(token);
     const response = await keelClient.api.queries.listTeams();
     if (response.data && response.data.results.length) {
       redirect(`/${response.data.results[0].id}`);

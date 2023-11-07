@@ -13,12 +13,8 @@ type Props = {
   children: React.ReactNode;
 } & LayoutProps;
 
-export default async function SidebarLayout({ children, params }: Props) {
+export default async function Page({ params }: Props) {
   const { teamId } = params;
-
-  const token = cookies().get('keel.auth')?.value ?? '';
-  keelClient.client.setToken(token);
-
   const firstDocument = (
     await keelClient.api.queries.listDocuments({
       where: { team: { id: { equals: teamId } } },

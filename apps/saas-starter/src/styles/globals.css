@@ -85,3 +85,24 @@ p a:visited {
 ::-webkit-scrollbar-thumb:hover {
   background: #fff;
 }
+
+@layer components {
+  .skeleton {
+    /* @apply animate-pulse; */
+  }
+  .swoosh {
+    animation: swoosh 3s ease-in-out infinite;
+  }
+}
+
+@keyframes swoosh {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

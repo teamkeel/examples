@@ -6,9 +6,6 @@ import { PageProps } from '../../../../.next/types/app/[teamId]/[documentId]/pag
 export default async function AppHome({ params }: PageProps) {
   const { documentId } = params;
 
-  const token = cookies().get('keel.auth')?.value ?? '';
-  keelClient.client.setToken(token);
-
   const document = await keelClient.api.queries.getDocument({
     id: documentId,
   });

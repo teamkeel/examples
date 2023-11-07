@@ -1,5 +1,4 @@
 import { keelClient } from '@/util/clients';
-import { RouteHandler } from 'next/dist/server/base-server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 

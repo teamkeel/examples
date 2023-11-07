@@ -5,29 +5,18 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { UpdateIcon } from '@radix-ui/react-icons';
+import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useFormState } from 'react-dom';
+import { handleLogin } from '@/app/actions/login';
+import { LoginButton } from './LoginButton';
 
 export function LoginForm(className: any, ...props: any[]) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    error: '',
-  });
-
-  const clearError = () => {
-    setFormData((prevState: any) => ({ ...prevState, error: '' }));
-  };
+  const [formState, action] = useFormState(handleLogin, { type: 'initial' });
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
-      {/* @ts-ignore */}
-      <form onSubmit={handleLogin}>
+      <form action={action}>
         <div className="grid gap-4">
           <div className="grid gap-2">
             <Label className="" htmlFor="email">
@@ -40,14 +29,6 @@ export function LoginForm(className: any, ...props: any[]) {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              disabled={isLoading}
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  email: e.target.value,
-                }))
-              }
-              onFocus={clearError}
             />
           </div>
           <div className="grid gap-2">
@@ -60,26 +41,17 @@ export function LoginForm(className: any, ...props: any[]) {
               autoCapitalize="none"
               autoComplete="password"
               autoCorrect="off"
-              disabled={isLoading}
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  password: e.target.value,
-                }))
-              }
-              onFocus={clearError}
             />
           </div>
-          <Button disabled={isLoading}>
-            {isLoading ? (
-              <UpdateIcon className="w-4 h-4 mr-2 animate-spin" />
-            ) : (
-              'Login'
-            )}
-          </Button>
+          <LoginButton />
         </div>
       </form>
-      {formData.error && <p color="red">{formData.error}</p>}
+      {formState.type === 'error' && (
+        <span className="text-xs text-red-400">
+          <strong>Signup failed: </strong>
+          {formState.message}
+        </span>
+      )}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />

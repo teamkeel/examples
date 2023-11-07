@@ -45,14 +45,16 @@ export default function TeamSwitcher({ teams, teamId }: TeamSwitcherProps) {
               aria-label="Select a team"
               className={cn('w-full justify-between p-3')}
             >
-              {teams.length > 0 ? (
+              {selectedTeam && teams.length > 0 ? (
                 <>
                   <Avatar className="w-5 h-5 mr-2">
                     <AvatarImage
                       src={`https://avatar.vercel.sh/${selectedTeam.value}.png`}
                       alt={selectedTeam.label}
                     />
-                    <AvatarFallback>SC</AvatarFallback>
+                    <AvatarFallback>
+                      {selectedTeam.label[0].toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                   {selectedTeam.label}
                 </>
@@ -74,7 +76,7 @@ export default function TeamSwitcher({ teams, teamId }: TeamSwitcherProps) {
                       onSelect={() => {
                         push(`/${team.id}`);
                       }}
-                      className="text-sm"
+                      className="text-sm cursor-pointer"
                     >
                       <Avatar className="w-5 h-5 mr-2">
                         <AvatarImage
@@ -90,7 +92,7 @@ export default function TeamSwitcher({ teams, teamId }: TeamSwitcherProps) {
                       <CheckIcon
                         className={cn(
                           'ml-auto h-4 w-4',
-                          selectedTeam.value === team.value
+                          selectedTeam?.value === team.value
                             ? 'opacity-100'
                             : 'opacity-0'
                         )}
@@ -98,7 +100,7 @@ export default function TeamSwitcher({ teams, teamId }: TeamSwitcherProps) {
                     </CommandItem>
                   ))}
                   <CommandItem
-                    className="flex items-center gap-2 text-gray-400"
+                    className="flex items-center gap-2 text-gray-400 cursor-pointer"
                     onSelect={() => setIsCreateTeamDialogOpen(true)}
                   >
                     <PlusIcon /> Create New Team

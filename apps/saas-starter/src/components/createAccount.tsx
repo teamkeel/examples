@@ -5,10 +5,9 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { CreateAccountButton } from './CreateAccountButton';
 import { signup } from '@/app/actions/signup';
 import { useFormState } from 'react-dom';
-import { redirect } from 'next/navigation';
 
 export function CreateAccount({ className, ...props }: { className?: string }) {
   const [state, formAction] = useFormState(signup, {
@@ -16,7 +15,7 @@ export function CreateAccount({ className, ...props }: { className?: string }) {
   });
 
   if (state.type === 'success') {
-    redirect(`/${state.firstTeamId}`);
+    window.location.reload();
   }
 
   return (
@@ -43,7 +42,7 @@ export function CreateAccount({ className, ...props }: { className?: string }) {
               name="password"
             />
           </div>
-          <Button type="submit">Create Account</Button>
+          <CreateAccountButton />
         </div>
       </form>
       {state.type === 'error' && (
