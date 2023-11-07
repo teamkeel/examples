@@ -106,3 +106,7 @@ p a:visited {
     transform: translateX(100%);
   }
 }
+
+::file-selector-button {
+  @apply hidden;
+}

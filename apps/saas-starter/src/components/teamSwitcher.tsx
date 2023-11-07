@@ -26,7 +26,7 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<
 
 interface TeamSwitcherProps extends PopoverTriggerProps {
   teamId: string;
-  teams: { id: string; label: string; value: string }[];
+  teams: { id: string; logoUrl: string | null; label: string; value: string }[];
 }
 
 export default function TeamSwitcher({ teams, teamId }: TeamSwitcherProps) {
@@ -49,11 +49,14 @@ export default function TeamSwitcher({ teams, teamId }: TeamSwitcherProps) {
                 <>
                   <Avatar className="w-5 h-5 mr-2">
                     <AvatarImage
-                      src={`https://avatar.vercel.sh/${selectedTeam.value}.png`}
+                      src={
+                        selectedTeam.logoUrl ||
+                        `https://avatar.vercel.sh/${selectedTeam.value}.png`
+                      }
                       alt={selectedTeam.label}
                     />
                     <AvatarFallback>
-                      {selectedTeam.label[0].toUpperCase()}
+                      {selectedTeam.label?.[0].toUpperCase() ?? '-'}
                     </AvatarFallback>
                   </Avatar>
                   {selectedTeam.label}
@@ -80,12 +83,15 @@ export default function TeamSwitcher({ teams, teamId }: TeamSwitcherProps) {
                     >
                       <Avatar className="w-5 h-5 mr-2">
                         <AvatarImage
-                          src={`https://avatar.vercel.sh/${team.value}.png`}
+                          src={
+                            team.logoUrl ||
+                            `https://avatar.vercel.sh/${team.value}.png`
+                          }
                           alt={team.label}
                           className="grayscale"
                         />
                         <AvatarFallback>
-                          {team.label[0].toUpperCase()}
+                          {team.label?.[0].toUpperCase() ?? '-'}
                         </AvatarFallback>
                       </Avatar>
                       {team.label}

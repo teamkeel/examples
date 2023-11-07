@@ -37,7 +37,11 @@ export async function Sidebar(props: Props) {
       </Inner>
       <div className="flex-1">
         <Inner className="p-4 pt-2">
-          <NavItem href="/settings" title="Settings" icon={<GearIcon />} />
+          <NavItem
+            href={`/${teamId}/settings`}
+            title="Settings"
+            icon={<GearIcon />}
+          />
           <div className="flex items-center pt-6">
             <p className="flex-1 py-1 text-xs font-medium text-muted-foreground">
               Documents

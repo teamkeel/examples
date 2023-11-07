@@ -11,6 +11,7 @@ export const TeamSwitcherServer = async ({ teamId }: Props) => {
       id: team.id,
       label: team.name,
       value: team.name,
+      logoUrl: team.logoUrl,
     })) ?? [];
   return <TeamSwitcher teamId={teamId} teams={teams} />;
 };

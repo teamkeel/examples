@@ -33,13 +33,17 @@ model Team {
         description Text?
         documents Document[]
         owner Identity
+        logoUrl Text?
     }
 
     actions {
         get getTeam(id)
         list listTeams()
         delete deleteTeam(id)
-        update updateTeam(id) with (name?, description?)
+        update updateTeam(id) with (name?, description?, logoUrl?)
+        write uploadTeamLogo(UploadImageInput) returns (UploadImageResponse) {
+            @permission(expression: true)
+        }
     }
 
     @unique([owner, name])
@@ -94,34 +98,9 @@ model Document {
     )
 }
 
-model ProfileImage {
-    fields {
-        path Text @unique
-        user User?
-        team Team?
-    }
-
-    actions {
-        get getImage(id) {
-            @permission(expression: ctx.identity == profileImage.user.identity)
-        }
-        list listImages() {
-            @where(ctx.identity == profileImage.user.identity)
-        }
-        delete deleteImage(id)
-        write uploadImageToCloudinary(UploadImageInput) returns (UploadImageResponse)
-    }
-
-    @permission(
-        actions: [get, delete, list],
-        expression: profileImage.user.identity == ctx.identity
-    )
-}
-
 message UploadImageInput {
     base64Image Text
-    userId ID
-    teamId ID?
+    teamId ID
 }
 
 message UploadImageResponse {

@@ -270,6 +270,9 @@ export class APIClient extends Core {
         updateTeam : (i: UpdateTeamInput) => {
             return this.client.rawRequest<Team>("updateTeam", i);
         },
+        uploadTeamLogo : (i: UploadImageInput) => {
+            return this.client.rawRequest<UploadImageResponse>("uploadTeamLogo", i);
+        },
         createTeamMembership : (i: CreateTeamMembershipInput) => {
             return this.client.rawRequest<TeamMembership>("createTeamMembership", i);
         },
@@ -287,18 +290,6 @@ export class APIClient extends Core {
         },
         updateDocument : (i: UpdateDocumentInput) => {
             return this.client.rawRequest<Document>("updateDocument", i);
-        },
-        getImage : (i: GetImageInput) => {
-            return this.client.rawRequest<ProfileImage | null>("getImage", i);
-        },
-        listImages : (i?: ListImagesInput) => {
-            return this.client.rawRequest<{results: ProfileImage[], pageInfo: any}>("listImages", i);
-        },
-        deleteImage : (i: DeleteImageInput) => {
-            return this.client.rawRequest<string>("deleteImage", i);
-        },
-        uploadImageToCloudinary : (i: UploadImageInput) => {
-            return this.client.rawRequest<UploadImageResponse>("uploadImageToCloudinary", i);
         },
         activeInvites : (i?: ActiveInvitesInput) => {
             return this.client.rawRequest<{results: Invitation[], pageInfo: any}>("activeInvites", i);
@@ -328,8 +319,6 @@ export class APIClient extends Core {
             listTeams: this.actions.listTeams,
             getDocument: this.actions.getDocument,
             listDocuments: this.actions.listDocuments,
-            getImage: this.actions.getImage,
-            listImages: this.actions.listImages,
             activeInvites: this.actions.activeInvites,
         },
         mutations: {
@@ -338,12 +327,11 @@ export class APIClient extends Core {
             updateUser: this.actions.updateUser,
             deleteTeam: this.actions.deleteTeam,
             updateTeam: this.actions.updateTeam,
+            uploadTeamLogo: this.actions.uploadTeamLogo,
             createTeamMembership: this.actions.createTeamMembership,
             deleteDocument: this.actions.deleteDocument,
             createDocument: this.actions.createDocument,
             updateDocument: this.actions.updateDocument,
-            deleteImage: this.actions.deleteImage,
-            uploadImageToCloudinary: this.actions.uploadImageToCloudinary,
             createInvite: this.actions.createInvite,
             authenticate: this.actions.authenticate,
             requestPasswordReset: this.actions.requestPasswordReset,
@@ -357,8 +345,7 @@ export class APIClient extends Core {
 
 export interface UploadImageInput {
     base64Image: string;
-    userId: string;
-    teamId?: string | null;
+    teamId: string;
 }
 export interface UploadImageResponse {
     path: string;
@@ -413,6 +400,7 @@ export interface UpdateTeamWhere {
 export interface UpdateTeamValues {
     name?: string;
     description?: string | null;
+    logoUrl?: string | null;
 }
 export interface UpdateTeamInput {
     where: UpdateTeamWhere;
@@ -486,21 +474,6 @@ export interface UpdateDocumentInput {
     where: UpdateDocumentWhere;
     values?: UpdateDocumentValues;
 }
-export interface GetImageInput {
-    id: string;
-}
-export interface ListImagesWhere {
-}
-export interface ListImagesInput {
-    where?: ListImagesWhere;
-    first?: number;
-    after?: string;
-    last?: number;
-    before?: string;
-}
-export interface DeleteImageInput {
-    id: string;
-}
 export interface ActiveInvitesWhere {
 }
 export interface ActiveInvitesInput {
@@ -553,6 +526,7 @@ export interface User {
 export interface Team {
     name: string
     description: string | null
+    logoUrl: string | null
     id: string
     createdAt: Date
     updatedAt: Date
@@ -572,14 +546,6 @@ export interface Document {
     createdAt: Date
     updatedAt: Date
     userId: string
-    teamId: string | null
-}
-export interface ProfileImage {
-    path: string
-    id: string
-    createdAt: Date
-    updatedAt: Date
-    userId: string | null
     teamId: string | null
 }
 export interface Invitation {

@@ -2,10 +2,18 @@ import { PropsWithChildren } from 'react';
 import { cn } from '../../../lib/utils';
 import { Button } from '../../../components/ui/button';
 import { TeamDetailsForm } from './forms/teamDetailsForm';
-import { Billing } from './forms/billing';
-import { TeamMembers } from './forms/members';
+import { keelClient } from '@/util/clients';
+// import { Billing } from './forms/billing';
+// import { TeamMembers } from './forms/members';
 
-export default function TeamSettings({ params }: { params: { id: string } }) {
+export default async function TeamSettings({
+  params,
+}: {
+  params: { teamId: string };
+}) {
+  const teamName = (await keelClient.api.queries.getTeam({ id: params.teamId }))
+    .data?.name;
+
   return (
     <PageWrap>
       <h2 className="text-xl font-bold">Team settings</h2>
@@ -24,7 +32,7 @@ export default function TeamSettings({ params }: { params: { id: string } }) {
           <p className="font-semibold">Team details</p>
         </aside>
         <div className="w-2/3">
-          <TeamDetailsForm />
+          <TeamDetailsForm teamId={params.teamId} teamName={teamName} />
         </div>
       </div>
       <hr className="my-6" />
@@ -32,18 +40,14 @@ export default function TeamSettings({ params }: { params: { id: string } }) {
         <aside className="w-1/3">
           <p className="font-semibold">Members</p>
         </aside>
-        <div className="w-2/3">
-          <TeamMembers />
-        </div>
+        <div className="w-2/3">{/* <TeamMembers /> */}</div>
       </div>
       <hr className="my-6" />
       <div className="flex">
         <aside className="w-1/3">
           <p className="font-semibold">Billing</p>
         </aside>
-        <div className="w-2/3">
-          <Billing />
-        </div>
+        <div className="w-2/3">{/* <Billing /> */}</div>
       </div>
       <hr className="my-6" />
       <div className="flex">
