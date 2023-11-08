@@ -1,5 +1,5 @@
 import { Dialog } from '@radix-ui/react-dialog';
-import { FC, PropsWithChildren, useRef, useState } from 'react';
+import { FC, PropsWithChildren, useRef } from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 import { CreateTeamForm } from './CreateTeamForm';

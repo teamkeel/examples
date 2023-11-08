@@ -9,11 +9,7 @@ export const TeamDetailsForm = ({
   teamName,
 }: PropsWithChildren<{ teamName: string; teamId: string }>) => {
   return (
-    <form
-      encType="multipart/form-data"
-      className="grid gap-4"
-      action={editTeam}
-    >
+    <form className="grid gap-4" action={editTeam}>
       <Label>
         Team Name
         <Input

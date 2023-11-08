@@ -1,5 +1,3 @@
-import 'react-quill/dist/quill.snow.css';
-
 import { Sidebar } from '@/components/Sidebar';
 import { LayoutProps } from '../../../.next/types/app/layout';
 

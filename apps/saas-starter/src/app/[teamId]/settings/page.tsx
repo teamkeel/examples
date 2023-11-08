@@ -1,10 +1,10 @@
 import { PropsWithChildren } from 'react';
 import { cn } from '../../../lib/utils';
-import { Button } from '../../../components/ui/button';
 import { TeamDetailsForm } from './forms/teamDetailsForm';
 import { keelClient } from '@/util/clients';
-// import { Billing } from './forms/billing';
-// import { TeamMembers } from './forms/members';
+import { Billing } from './forms/billing';
+import { TeamMembers } from './forms/members';
+import { DeleteTeamDialog } from '@/components/DeleteTeamDialog';
 
 export default async function TeamSettings({
   params,
@@ -21,18 +21,12 @@ export default async function TeamSettings({
         Manage your team details, members and billing information
       </p>
       <hr className="my-6" />
-      {/* <div>
-        <Button variant={"link"}>Members</Button>
-        <Button variant={"link"}>Billing</Button>
-        <Button variant={"link"}>Delete</Button>
-      </div> */}
-      {/* <h2 className="text-xl font-bold">Settings</h2> */}
       <div className="flex">
         <aside className="w-1/3">
           <p className="font-semibold">Team details</p>
         </aside>
         <div className="w-2/3">
-          <TeamDetailsForm teamId={params.teamId} teamName={teamName} />
+          <TeamDetailsForm teamId={params.teamId} teamName={teamName ?? ''} />
         </div>
       </div>
       <hr className="my-6" />
@@ -40,14 +34,18 @@ export default async function TeamSettings({
         <aside className="w-1/3">
           <p className="font-semibold">Members</p>
         </aside>
-        <div className="w-2/3">{/* <TeamMembers /> */}</div>
+        <div className="w-2/3">
+          <TeamMembers />
+        </div>
       </div>
       <hr className="my-6" />
       <div className="flex">
         <aside className="w-1/3">
           <p className="font-semibold">Billing</p>
         </aside>
-        <div className="w-2/3">{/* <Billing /> */}</div>
+        <div className="w-2/3">
+          <Billing />
+        </div>
       </div>
       <hr className="my-6" />
       <div className="flex">
@@ -55,7 +53,7 @@ export default async function TeamSettings({
           <p className="font-semibold">Delete team</p>
         </aside>
         <div className="w-2/3">
-          <Button variant={'destructive'}>Delete team</Button>
+          <DeleteTeamDialog teamId={params.teamId} teamName={teamName ?? ''} />
         </div>
       </div>
     </PageWrap>
