@@ -8,6 +8,7 @@ const baseSchema = z.object({
   tags: z.string().array(),
   title: z.string().optional(),
   readme: z.string().optional(),
+  deploymentUrl: z.string().optional(),
   files: z
     .object({
       name: z.string(),
