@@ -1,6 +1,7 @@
 ---
 title: Notion Clone
 tags: notion, notes, saas
+deploymentUrl: https://saas-starter-h8n7fgc51-teamkeel.vercel.app/
 ---
 
 This is a sample Keel project that demonstrates how to build a Notion clone using Keel using the following features:

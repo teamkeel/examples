@@ -51,7 +51,7 @@ export default function Page(
           <Markdown>{props?.readme}</Markdown>
         </ContentLayout.Aside>
         <ContentLayout.Main>
-          <figure className="grid gap-2 text-sm text-center p-2 border border-sand bg-sand rounded">
+          <figure className="grid gap-2 p-2 text-sm text-center border rounded border-sand bg-sand">
             <img
               alt={props.title}
               className="rounded shadow"
@@ -61,6 +61,24 @@ export default function Page(
               A screenshot of the {props.title} sample application.
             </figcaption>
           </figure>
+          <div className="flex items-center w-full gap-2">
+            {props.deploymentUrl && (
+              <a
+                target="_blank"
+                href={props.deploymentUrl}
+                className="flex items-center justify-center w-full px-4 py-2 font-bold text-white border rounded border-primary bg-primary"
+              >
+                View Demo
+              </a>
+            )}
+            <a
+              target="_blank"
+              href={`https://github.com/teamkeel/examples/tree/main/apps/${props.slug}`}
+              className="flex items-center justify-center w-full px-4 py-2 border rounded border-sand-dark bg-sand-dark"
+            >
+              View Code
+            </a>
+          </div>
         </ContentLayout.Main>
       </ContentLayout.Root>
     </PageWrapper>
