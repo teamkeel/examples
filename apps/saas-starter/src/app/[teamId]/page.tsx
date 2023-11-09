@@ -1,13 +1,11 @@
 import 'react-quill/dist/quill.snow.css';
 
-import { LayoutProps } from '../../../.next/types/app/layout';
 import { keelClient } from '@/util/clients';
 import { redirect } from 'next/navigation';
 import { H1 } from '@/components/H1';
 import Link from 'next/link';
-import { PropsWithChildren } from 'react';
 
-type Props = PropsWithChildren<LayoutProps>;
+type Props = { params: { teamId: string } };
 
 export default async function Page({ params }: Props) {
   const { teamId } = params;

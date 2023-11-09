@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { LoginForm } from '@/components/LoginForm';
 import { randomQuote } from '../../lib/randomQuote';
+import { LoginForm } from '@/components/loginForm';
 
 export default function LoginPage() {
   return (

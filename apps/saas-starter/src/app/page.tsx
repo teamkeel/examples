@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { CreateAccount } from '@/components/CreateAccount';
+import { CreateAccount } from '@/components/createAccount';
 import { randomQuote } from '@/lib/randomQuote';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';

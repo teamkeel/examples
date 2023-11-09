@@ -1,9 +1,9 @@
 import { Sidebar } from '@/components/Sidebar';
-import { LayoutProps } from '../../../.next/types/app/layout';
 
 type Props = {
   children: React.ReactNode;
-} & LayoutProps;
+  params: { teamId: string };
+};
 
 export default async function SidebarLayout({ children, params }: Props) {
   return (

@@ -1,5 +1,5 @@
 import { keelClient } from '@/util/clients';
-import TeamSwitcher from './TeamSwitcher';
+import TeamSwitcher from './teamSwitcher';
 
 type Props = {
   teamId: string;
