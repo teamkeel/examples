@@ -22,7 +22,7 @@ export async function Sidebar(props: Props) {
     : { data: { results: [] } };
 
   return (
-    <aside className="flex flex-col h-full border-r w-60 bg-slate-3">
+    <aside className="flex flex-col h-full border-r w-70 bg-slate-3">
       <Inner>
         <Suspense
           fallback={

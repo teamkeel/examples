@@ -112,3 +112,15 @@ p a:visited {
 ::file-selector-button {
   @apply hidden;
 }
+
+.document h2 {
+  @apply text-2xl font-semibold;
+}
+
+.document h2::after {
+  content: '';
+  height: 1px;
+  width: 100%;
+  display: block;
+  @apply bg-neutral-700;
+}
