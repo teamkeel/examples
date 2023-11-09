@@ -1,0 +1,4 @@
+secrets:
+  - name: CLOUDINARY_CLOUD_NAME
+  - name: CLOUDINARY_API_KEY
+  - name: CLOUDINARY_API_SECRET

@@ -10,9 +10,7 @@ model User {
         get me() {
             @where(user.identity == ctx.identity)
         }
-        list listUsers() {
-            @where(user.identity == ctx.identity)
-        }
+        list listUsers()
         delete deleteUser(id)
         create createUser() with (name, email) {
             @set(user.identity = ctx.identity)

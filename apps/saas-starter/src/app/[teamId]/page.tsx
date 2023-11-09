@@ -1,17 +1,13 @@
 import 'react-quill/dist/quill.snow.css';
 
-import { Sidebar } from '@/components/Sidebar';
 import { LayoutProps } from '../../../.next/types/app/layout';
-import { cookies } from 'next/headers';
 import { keelClient } from '@/util/clients';
 import { redirect } from 'next/navigation';
 import { H1 } from '@/components/H1';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { PropsWithChildren } from 'react';
 
-type Props = {
-  children: React.ReactNode;
-} & LayoutProps;
+type Props = PropsWithChildren<LayoutProps>;
 
 export default async function Page({ params }: Props) {
   const { teamId } = params;
