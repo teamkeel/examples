@@ -8,6 +8,7 @@ const baseSchema = z.object({
   tags: z.string().array(),
   title: z.string().optional(),
   readme: z.string().optional(),
+  deploymentUrl: z.string().optional(),
   files: z
     .object({
       name: z.string(),
@@ -26,6 +27,10 @@ export type Entry = z.infer<typeof baseSchema>;
 const directories = [
   {
     name: "patterns",
+    type: baseSchema,
+  },
+  {
+    name: "apps",
     type: baseSchema,
   },
   {
@@ -102,7 +107,7 @@ export const loadDirectory = async (
       entry.files = entry.files.concat(result);
     }
 
-    const readmeFile = entry.files.find((file) => file.name === "readme.md");
+    const readmeFile = entry.files.find((file) => file.name.toLowerCase() === "readme.md");
     if (readmeFile) {
       const data = fm<{
         tags: string;
@@ -149,7 +154,7 @@ const loadFiles = async (
   let files = [];
   try {
     files = (await fs.readdir(rootPath + dir)).filter((file) =>
-      extension.some((ext) => file.endsWith(ext))
+      extension.some((ext) => file.toLowerCase().endsWith(ext))
     );
   } catch (err) {
     // Skip for directories that don't exist. E.g projects that don't have functions
@@ -179,7 +184,7 @@ const highlightFiles = async (entry: Entry) => {
   const files = await Promise.all(
     entry.files
       // Remove readmes from our file list as we handle that content elsewhere
-      .filter((file) => file.name != "readme.md")
+      .filter((file) => file.name.toLowerCase() != "readme.md")
       // Sort with .keel files first and then grouped by extension in alphabetical order
       .sort((a, b) => {
         const extA = getExtension(a.name);

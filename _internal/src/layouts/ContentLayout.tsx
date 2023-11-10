@@ -13,7 +13,11 @@ const Aside = (props: PropsWithChildren) => {
 };
 
 const Main = (props: PropsWithChildren) => {
-  return <main className="w-full md:w-3/5">{props.children}</main>;
+  return (
+    <main className="grid items-start content-start w-full gap-4 md:w-3/5">
+      {props.children}
+    </main>
+  );
 };
 
 export const ContentLayout = {

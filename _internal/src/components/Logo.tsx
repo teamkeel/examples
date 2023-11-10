@@ -1,11 +1,6 @@
 import * as React from "react";
 const Logo = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1596 512" {...props}>
-    <defs>
-      <style>
-        {"#text{fill:#000}@media (prefers-color-scheme:dark){#text{fill:#fff}}"}
-      </style>
-    </defs>
     <path
       d="M214.32 257.29a8.58 8.58 0 0 0-2.49-5.78l-94.52-94.76a8.552 8.552 0 0 0-12.11 0l-94.52 94.77a8.535 8.535 0 0 0-2.49 5.78h206.14Z"
       style={{
