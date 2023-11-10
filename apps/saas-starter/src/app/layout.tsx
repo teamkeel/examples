@@ -1,10 +1,9 @@
-import { Providers } from '@/components/Providers';
 import '../styles/globals.css';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { keelClient } from '@/util/clients';
+import { createClient } from '@/util/createClient';
 
 export const metadata: Metadata = {
   title: 'Keel SaaS Starter',
@@ -16,10 +15,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const keelClient = createClient();
   const path = headers().get('x-pathname'); // <- Added by middleware.ts because Next doesn't give us the current pathname
   try {
-    const token = cookies().get('keel.auth')?.value ?? '';
-    keelClient.client.setToken(token);
     const me = await keelClient.api.queries.me();
     if (!me.data) {
       throw new Error('Not logged in');
@@ -29,10 +27,8 @@ export default async function RootLayout({
   }
 
   return (
-    <Providers>
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    </Providers>
+    <html lang="en">
+      <body>{children}</body>
+    </html>
   );
 }

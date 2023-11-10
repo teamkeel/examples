@@ -2,13 +2,11 @@
 
 import { CreateDocumentInput } from "@/lib/keelClient";
 import { FormType } from "@/util/FormType";
-import { keelClient } from "@/util/clients";
+import { createClient } from "@/util/createClient";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
-export const createDocument = async (state: FormType, formData: FormData): Promise<FormType> => {
-    const token = cookies().get('keel.auth')?.value ?? '';
-    keelClient.client.setToken(token);
+export const createDocument = async (_: FormType, formData: FormData): Promise<FormType> => {
+    const keelClient = createClient();
 
     const title = formData.get('title')?.toString() ?? ''
     const content = formData.get('content')?.toString() ?? ''

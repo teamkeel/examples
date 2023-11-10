@@ -1,14 +1,15 @@
 import 'react-quill/dist/quill.snow.css';
 
-import { keelClient } from '@/util/clients';
 import { redirect } from 'next/navigation';
 import { H1 } from '@/components/H1';
 import Link from 'next/link';
+import { createClient } from '@/util/createClient';
 
 type Props = { params: { teamId: string } };
 
 export default async function Page({ params }: Props) {
   const { teamId } = params;
+  const keelClient = createClient();
   const firstDocument = (
     await keelClient.api.queries.listDocuments({
       where: { team: { id: { equals: teamId } } },

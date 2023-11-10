@@ -2,15 +2,16 @@ import { Inner } from '@/components/Inner';
 import { FileIcon, GearIcon, PlusIcon } from '@radix-ui/react-icons';
 import { NavItem } from './NavItem';
 import { TeamSwitcherServer } from './TeamSwitcher.server';
-import { keelClient } from '@/util/clients';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { Skeleton } from './Skeleton';
+import { createClient } from '@/util/createClient';
 
 type Props = { teamId?: string };
 
 export async function Sidebar(props: Props) {
   const { teamId } = props;
+  const keelClient = createClient();
 
   const me = (await keelClient.api.queries.me()).data!;
   const documents = teamId
@@ -22,7 +23,7 @@ export async function Sidebar(props: Props) {
     : { data: { results: [] } };
 
   return (
-    <aside className="flex flex-col h-full border-r w-70 bg-slate-3">
+    <aside className="flex flex-col h-full border-r w-72 bg-slate-3">
       <Inner>
         <Suspense
           fallback={

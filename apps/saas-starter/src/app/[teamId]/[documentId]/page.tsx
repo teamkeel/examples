@@ -1,11 +1,11 @@
-import { keelClient } from '@/util/clients';
 import ReactMarkdown from 'react-markdown';
-import { PageProps } from '../../../../.next/types/app/[teamId]/[documentId]/page';
+import { createClient } from '@/util/createClient';
+import { PageProps } from '../../../../.next/types/app/layout';
 
 export default async function AppHome({ params }: PageProps) {
   const { documentId } = params;
 
-  const document = await keelClient.api.queries.getDocument({
+  const document = await createClient().api.queries.getDocument({
     id: documentId,
   });
 

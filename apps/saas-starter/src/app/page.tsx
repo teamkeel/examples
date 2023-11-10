@@ -5,10 +5,11 @@ import { CreateAccount } from '@/components/createAccount';
 import { randomQuote } from '@/lib/randomQuote';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { keelClient } from '@/util/clients';
+import { createClient } from '@/util/createClient';
 
 export default async function Signup() {
-  if (cookies().get('keel.auth')) {
+  const keelClient = createClient();
+  if (keelClient.ctx.isAuthenticated) {
     const response = await keelClient.api.queries.listTeams();
     if (response.data && response.data.results.length) {
       redirect(`/${response.data.results[0].id}`);

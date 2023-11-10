@@ -1,18 +1,19 @@
 import { PropsWithChildren } from 'react';
 import { cn } from '../../../lib/utils';
 import { TeamDetailsForm } from './forms/teamDetailsForm';
-import { keelClient } from '@/util/clients';
 import { Billing } from './forms/billing';
 import { TeamMembers } from './forms/members';
 import { DeleteTeamDialog } from '@/components/DeleteTeamDialog';
+import { createClient } from '@/util/createClient';
 
 export default async function TeamSettings({
   params,
 }: {
   params: { teamId: string };
 }) {
-  const teamName = (await keelClient.api.queries.getTeam({ id: params.teamId }))
-    .data?.name;
+  const teamName = (
+    await createClient().api.queries.getTeam({ id: params.teamId })
+  ).data?.name;
 
   return (
     <PageWrap>

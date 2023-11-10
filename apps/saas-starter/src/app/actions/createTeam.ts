@@ -1,13 +1,12 @@
 'use server'
 
 import { FormType } from "@/util/FormType";
-import { keelClient } from "@/util/clients";
+import { createClient } from "@/util/createClient";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 export const createTeam = async (_: FormType, formData: FormData): Promise<FormType> => {
-    const token = cookies().get('keel.auth')?.value;
-    if (!token) {
+    const keelClient = createClient();
+    if (!keelClient.ctx.isAuthenticated) {
         return { type: "error", message: "No token found." }
     }
 
@@ -19,7 +18,6 @@ export const createTeam = async (_: FormType, formData: FormData): Promise<FormT
     }
 
     revalidatePath('/')
-    keelClient.client.setToken(token);
 
     const data = {
         name, description

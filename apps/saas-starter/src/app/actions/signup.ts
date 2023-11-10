@@ -1,11 +1,12 @@
 'use server';
 
 import { FormType } from "@/util/FormType";
-import { keelClient } from "@/util/clients";
+import { createClient } from "@/util/createClient";
 import { cookies } from 'next/headers'
 
 export const signup = async (_: FormType, formData: FormData): Promise<FormType> => {
     try {
+        const keelClient = createClient();
         const email = formData.get('email')?.toString() ?? "";
         const password = formData.get('password')?.toString() ?? "";
         const response = await keelClient.api.mutations.authenticate({

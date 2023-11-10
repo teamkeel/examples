@@ -1,13 +1,11 @@
 'use server';
 
 import { FormType } from "@/util/FormType";
-import { keelClient } from "@/util/clients";
+import { createClient } from "@/util/createClient";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 export const deleteTeam = async (_: FormType, formData: FormData): Promise<FormType> => {
-    const token = cookies().get('keel.auth')?.value ?? "";
-    keelClient.client.setToken(token);
+    const keelClient = createClient();
     try {
         await keelClient.api.mutations.deleteTeam({ id: formData.get('teamId')?.toString() ?? "" })
         revalidatePath('/')

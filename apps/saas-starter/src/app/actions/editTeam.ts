@@ -1,14 +1,12 @@
 'use server'
 
-import { keelClient } from "@/util/clients";
+import { createClient } from "@/util/createClient";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 export async function editTeam(formData: FormData) {
 
     try {
-        const token = cookies().get('keel.auth')?.value ?? '';
-        keelClient.client.setToken(token);
+        const keelClient = createClient();
         let imagePath = undefined;
         const file = formData.get('logo') as File;
 
