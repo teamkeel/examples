@@ -1,0 +1,5 @@
+auth:
+  providers:
+    - type: google
+      name: google
+      clientId: 950417749188-1i8eqpabj3gpm4fubte9cpfkrtvlv695.apps.googleusercontent.com

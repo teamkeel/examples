@@ -1,8 +1,8 @@
 {
   "name": "todomvc-remix",
   "private": true,
-  "sideEffects": false,
   "type": "module",
+  "sideEffects": false,
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual",
@@ -14,21 +14,28 @@
     "@remix-run/node": "^2.3.0",
     "@remix-run/react": "^2.3.0",
     "@remix-run/serve": "^2.3.0",
-    "@teamkeel/functions-runtime": "^0.372.0",
-    "@teamkeel/testing-runtime": "^0.372.0",
+    "@teamkeel/functions-runtime": "^0.373.1",
+    "@teamkeel/testing-runtime": "^0.373.1",
     "isbot": "^3.6.8",
     "kysely": "^0.23.4",
     "node-fetch": "^3.3.0",
+    "oidc-provider": "^8.4.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "remix-auth": "^3.6.0",
+    "remix-auth-oidc": "^1.0.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.3.0",
     "@remix-run/eslint-config": "^2.3.0",
+    "@types/node": "^18.11.18",
+    "@types/oidc-provider": "^8.4.3",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "eslint": "^8.38.0",
-    "typescript": "^5.1.6"
+    "tsx": "^3.12.6",
+    "typescript": "^5.3.2",
+    "vitest": "^0.34.6"
   },
   "engines": {
     "node": ">=18.0.0"

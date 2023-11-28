@@ -8,15 +8,16 @@ model Todo {
     actions {
         create createTodo() with (title) {
             @set(todo.owner = ctx.identity)
-            @permission(expression: ctx.isAuthenticated)
         }
-        list listTodos(owner.id)
+        list listTodos() {
+            @where(todo.owner == ctx.identity)
+        }
         update updateTodo(id) with (title?, completed?)
         delete deleteTodo(id)
     }
 
     @permission(
-        actions: [list, update, delete],
+        actions: [list, create, update, delete],
         expression: todo.owner == ctx.identity
     )
 }

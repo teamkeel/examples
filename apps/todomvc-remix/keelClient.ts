@@ -243,37 +243,53 @@ export class APIClient extends Core {
       super(config);
     }
     private actions = {
-        createTodo : (i: CreateTodoInput) => {
+        createUser: (i: CreateUserInput) => {
+            return this.client.rawRequest<User>("createUser", i);
+        },
+        listUsers: (i?: ListUsersInput) => {
+            return this.client.rawRequest<{results: User[], pageInfo: any}>("listUsers", i);
+        },
+        updateUser: (i: UpdateUserInput) => {
+            return this.client.rawRequest<User>("updateUser", i);
+        },
+        deleteUser: (i: DeleteUserInput) => {
+            return this.client.rawRequest<string>("deleteUser", i);
+        },
+        createTodo: (i: CreateTodoInput) => {
             return this.client.rawRequest<Todo>("createTodo", i);
         },
-        listTodos : (i: ListTodosInput) => {
+        listTodos: (i?: ListTodosInput) => {
             return this.client.rawRequest<{results: Todo[], pageInfo: any}>("listTodos", i);
         },
-        updateTodo : (i: UpdateTodoInput) => {
+        updateTodo: (i: UpdateTodoInput) => {
             return this.client.rawRequest<Todo>("updateTodo", i);
         },
-        deleteTodo : (i: DeleteTodoInput) => {
+        deleteTodo: (i: DeleteTodoInput) => {
             return this.client.rawRequest<string>("deleteTodo", i);
         },
-        authenticate : (i: AuthenticateInput) => {
+        authenticate: (i: AuthenticateInput) => {
             return this.client.rawRequest<AuthenticateResponse>("authenticate", i).then((res) => {
               if (res.data && res.data.token) this.client.setToken(res.data.token);
               return res;
             });
         },
-        requestPasswordReset : (i: RequestPasswordResetInput) => {
+        requestPasswordReset: (i: RequestPasswordResetInput) => {
             return this.client.rawRequest<RequestPasswordResetResponse>("requestPasswordReset", i);
         },
-        resetPassword : (i: ResetPasswordInput) => {
+        resetPassword: (i: ResetPasswordInput) => {
             return this.client.rawRequest<ResetPasswordResponse>("resetPassword", i);
         },
     };
 
     api = {
         queries: {
+            listUsers: this.actions.listUsers,
             listTodos: this.actions.listTodos,
         },
         mutations: {
+            createUser: this.actions.createUser,
+            updateUser: this.actions.updateUser,
+            deleteUser: this.actions.deleteUser,
             createTodo: this.actions.createTodo,
             updateTodo: this.actions.updateTodo,
             deleteTodo: this.actions.deleteTodo,
@@ -287,22 +303,49 @@ export class APIClient extends Core {
 
 // API Types
 
+export interface CreateUserInput {
+    username: string;
+    password: string;
+}
+export interface StringQueryInput {
+    equals?: string | null;
+    notEquals?: string | null;
+    startsWith?: string;
+    endsWith?: string;
+    contains?: string;
+    oneOf?: string[];
+}
+export interface ListUsersWhere {
+    username?: StringQueryInput;
+}
+export interface ListUsersInput {
+    where?: ListUsersWhere;
+    first?: number;
+    after?: string;
+    last?: number;
+    before?: string;
+}
+export interface UpdateUserWhere {
+    id: string;
+}
+export interface UpdateUserValues {
+    username?: string;
+    password?: string;
+}
+export interface UpdateUserInput {
+    where: UpdateUserWhere;
+    values?: UpdateUserValues;
+}
+export interface DeleteUserInput {
+    id: string;
+}
 export interface CreateTodoInput {
     title: string;
 }
-export interface ListTodosOwnerInput {
-    id: IdQueryInput;
-}
-export interface IdQueryInput {
-    equals?: string | null;
-    oneOf?: string[];
-    notEquals?: string | null;
-}
 export interface ListTodosWhere {
-    owner: ListTodosOwnerInput;
 }
 export interface ListTodosInput {
-    where: ListTodosWhere;
+    where?: ListTodosWhere;
     first?: number;
     after?: string;
     last?: number;
@@ -345,6 +388,13 @@ export interface ResetPasswordInput {
     password: string;
 }
 export interface ResetPasswordResponse {
+}
+export interface User {
+    username: string
+    password: string
+    id: string
+    createdAt: Date
+    updatedAt: Date
 }
 export interface Todo {
     title: string
