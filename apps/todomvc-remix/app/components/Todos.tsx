@@ -1,21 +1,13 @@
 import { SerializeFrom } from "@remix-run/node";
+import { useSubmit } from "@remix-run/react";
 import { Todo } from "keelClient";
 
 type Props = {
   todos: SerializeFrom<Todo[]>;
 };
+
 export const Todos = ({ todos }: Props) => {
-  const checkTodo = (id: string, checked: "true" | "false") => {
-    fetch("/?index", {
-      method: "POST",
-      body: new URLSearchParams({
-        action: "update",
-        checked,
-        id,
-      }),
-    });
-  };
-  // @todo error handling
+  const submit = useSubmit();
 
   return (
     <ul>
@@ -25,7 +17,14 @@ export const Todos = ({ todos }: Props) => {
             <input
               type="checkbox"
               onClick={() =>
-                checkTodo(t.id, String(!t.completed) as "true" | "false")
+                submit(
+                  new URLSearchParams({
+                    action: "update",
+                    checked: String(!t.completed),
+                    id: t.id,
+                  }),
+                  { method: "POST" }
+                )
               }
               defaultChecked={t.completed}
             />
