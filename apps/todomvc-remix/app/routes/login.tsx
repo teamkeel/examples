@@ -27,7 +27,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (keel.ctx.isAuthenticated) {
     return redirect("/");
   }
-  const antiCsrfToken = Math.random().toString(36).substring(2, 15);
+  if (!process.env.SIGNING_SECRET) {
+    throw new Error("No signing secret provided.");
+  }
+
+  const {
+    default: { sign },
+  } = await import("jsonwebtoken");
+  const antiCsrfToken = sign("csrf", process.env.SIGNING_SECRET);
   const clientId = process.env.GOOGLE_CLIENT_ID;
   return { antiCsrfToken, clientId };
 };

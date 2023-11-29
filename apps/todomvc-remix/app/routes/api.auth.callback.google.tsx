@@ -16,6 +16,19 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { searchParams } = new URL(request.url);
   const params = Object.fromEntries(searchParams.entries());
 
+  if (!process.env.SIGNING_SECRET) {
+    throw new Error("No signing secret provided.");
+  }
+
+  const {
+    default: { verify },
+  } = await import("jsonwebtoken");
+
+  const antiCsrfToken =
+    new URLSearchParams(params.state).get("security_token") ?? "";
+
+  verify(antiCsrfToken, process.env.SIGNING_SECRET);
+
   const data = await getIdTokenWithCode(params.code);
   const tokens = await exchangeGoogleIdTokenForKeelTokens(data.id_token);
 
