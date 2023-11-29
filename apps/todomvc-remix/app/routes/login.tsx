@@ -1,5 +1,6 @@
 import { LoaderFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { Layout } from "~/components/Layout";
 import { LoginButton } from "~/components/LoginButton";
 import { createClient } from "~/util/createClient";
 
@@ -9,16 +10,9 @@ export default function Login() {
     clientId: string;
   }>();
   return (
-    <div>
-      <header>
-        <h1>
-          Keel Logo x <span>TodoMVC</span>
-        </h1>
-      </header>
-      <main>
-        <LoginButton antiCsrfToken={antiCsrfToken} clientId={clientId} />
-      </main>
-    </div>
+    <Layout>
+      <LoginButton antiCsrfToken={antiCsrfToken} clientId={clientId} />
+    </Layout>
   );
 }
 

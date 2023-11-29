@@ -12,7 +12,7 @@ export const Todos = ({ todos }: Props) => {
   return (
     <ul>
       {todos.map((t) => (
-        <li key={t.id}>
+        <li className="grid" key={t.id}>
           <label>
             <input
               type="checkbox"
@@ -30,10 +30,19 @@ export const Todos = ({ todos }: Props) => {
             />
             <span>{t.title}</span>
           </label>
-          <form method="POST" action="/?index">
+          <form
+            onSubmit={(e) => {
+              if (!confirm("Are you sure you want to delete this todo?")) {
+                e.preventDefault();
+              }
+            }}
+            style={{ marginLeft: "auto" }}
+            method="POST"
+            action="/?index"
+          >
             <input type="hidden" name="action" value="delete" />
             <input type="hidden" name="id" value={t.id} />
-            <button>Remove</button>
+            <button style={{ all: "unset" }}>❌</button>
           </form>
         </li>
       ))}

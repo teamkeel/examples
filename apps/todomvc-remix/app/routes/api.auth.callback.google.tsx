@@ -1,18 +1,19 @@
 import { LoaderFunction, redirect } from "@remix-run/node";
-import { keelAccessCookie, keelRefreshCookie } from "~/cookies.server";
-
-const clientId = process.env.GOOGLE_CLIENT_ID;
-const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-
-if (!clientId) {
-  throw new Error("Missing GOOGLE_CLIENT_ID");
-}
-
-if (!clientSecret) {
-  throw new Error("Missing GOOGLE_CLIENT_SECRET");
-}
+import { commitSession, getSession } from "~/sessions.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+  if (!clientId) {
+    throw new Error("Missing GOOGLE_CLIENT_ID");
+  }
+
+  if (!clientSecret) {
+    throw new Error("Missing GOOGLE_CLIENT_SECRET");
+  }
+
+  const session = await getSession(request.headers.get("Cookie"));
   const { searchParams } = new URL(request.url);
   const params = Object.fromEntries(searchParams.entries());
 
@@ -29,19 +30,23 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   verify(antiCsrfToken, process.env.SIGNING_SECRET);
 
-  const data = await getIdTokenWithCode(params.code);
+  const data = await getIdTokenWithCode(params.code, clientId, clientSecret);
   const tokens = await exchangeGoogleIdTokenForKeelTokens(data.id_token);
+  session.set("keel_access_token", tokens.access_token);
+  session.set("keel_refresh_token", tokens.refresh_token);
 
-  const headers = new Headers([
-    ["Cache-Control", "must-revalidate, no-store, no-cache"],
-    ["Set-Cookie", await keelRefreshCookie.serialize(tokens.refresh_token)],
-    ["Set-Cookie", await keelAccessCookie.serialize(tokens.access_token)],
-  ]);
-
-  return redirect("/", { headers });
+  return redirect("/", {
+    headers: new Headers({
+      "Set-Cookie": await commitSession(session),
+    }),
+  });
 };
 
-const getIdTokenWithCode = async (code: string) => {
+const getIdTokenWithCode = async (
+  code: string,
+  clientId: string,
+  clientSecret: string
+) => {
   const response = await fetch(`https://oauth2.googleapis.com/token`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },

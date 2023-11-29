@@ -7,7 +7,9 @@ import {
 import { useLoaderData } from "@remix-run/react";
 import { Todo } from "keelClient";
 import { CreateTodoForm } from "~/components/CreateTodoForm";
+import { Layout } from "~/components/Layout";
 import { Todos } from "~/components/Todos";
+import { getSession } from "~/sessions.server";
 import { createClient } from "~/util/createClient";
 
 type LoaderData = { todos: Todo[] };
@@ -16,19 +18,12 @@ export default function Index() {
   const { todos } = useLoaderData<LoaderData>(); // See the `loader` function below.
 
   return (
-    <div>
-      <header>
-        <h1>
-          Keel Logo x <span>TodoMVC</span>
-        </h1>
-      </header>
-      <main>
-        <CreateTodoForm />
-        <div>
-          <Todos todos={todos} />
-        </div>
-      </main>
-    </div>
+    <Layout>
+      <CreateTodoForm />
+      <div>
+        <Todos todos={todos} />
+      </div>
+    </Layout>
   );
 }
 
@@ -36,10 +31,11 @@ export default function Index() {
  * Loaders are how we get data for the initial UI in Remix.
  */
 export const loader: LoaderFunction = async ({ request }) => {
-  const keel = await createClient(request.headers.get("Cookie") ?? "");
-  if (!keel.ctx.isAuthenticated) {
+  const session = await getSession(request.headers.get("Cookie"));
+  if (!session.has("keel_access_token")) {
     return redirect("/login");
   }
+  const keel = await createClient(request.headers.get("Cookie") ?? "");
   const todoRes = await keel.api.queries.listTodos({});
   const todos = todoRes?.data?.results ?? [];
   return { todos };

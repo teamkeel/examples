@@ -15,13 +15,12 @@ export const LoginButton = ({ antiCsrfToken, clientId }: Props) => (
         state: `security_token=${antiCsrfToken}`,
       };
 
-      console.log({ redirectUri });
       const queryString = new URLSearchParams(oauthParams).toString();
       const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?${queryString}`;
 
       window.location.href = googleAuthUrl;
     }}
   >
-    Login
+    Login with Google
   </button>
 );
