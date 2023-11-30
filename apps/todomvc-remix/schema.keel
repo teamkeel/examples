@@ -1,0 +1,23 @@
+model Todo {
+    fields {
+        title Text
+        completed Boolean @default(false)
+        owner Identity
+    }
+
+    actions {
+        create createTodo() with (title) {
+            @set(todo.owner = ctx.identity)
+        }
+        list listTodos() {
+            @where(todo.owner == ctx.identity)
+        }
+        update updateTodo(id) with (title?, completed?)
+        delete deleteTodo(id)
+    }
+
+    @permission(
+        actions: [list, create, update, delete],
+        expression: todo.owner == ctx.identity
+    )
+}
