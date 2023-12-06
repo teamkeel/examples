@@ -1,0 +1,6 @@
+auth:
+  providers:
+    - type: oidc
+      name: clerk
+      issuerUrl: "https://artistic-ostrich-8.clerk.accounts.dev"
+      clientId: "keel"
