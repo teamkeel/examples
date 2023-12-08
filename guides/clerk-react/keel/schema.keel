@@ -1,0 +1,24 @@
+model Thing {
+    fields {
+        name Text
+        identity Identity
+    }
+
+    actions {
+        get getThing(id)
+        create createThing() with (name) {
+            @set(thing.identity = ctx.identity)
+            @permission(expression: ctx.isAuthenticated)
+        }
+        update updateThing(id) with (name)
+        list myThings() {
+            @where(thing.identity == ctx.identity)
+        }
+        delete deleteThing(id)
+    }
+
+    @permission(
+        actions: [list, get, update, delete],
+        expression: thing.identity == ctx.identity
+    )
+}
