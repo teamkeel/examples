@@ -4,6 +4,7 @@ import { loadData } from "@/lib/data";
 import Link from "next/link";
 import { guideCategories } from "@/lib/staticData";
 import { EntryListRow } from "@/components/EntryListRow";
+import Image from "next/image";
 
 export async function getStaticProps() {
   const data = await loadData();
@@ -25,14 +26,14 @@ const CategoryBlock = (props: {
   return (
     <Link
       href={"guides/" + props.tag}
-      className="flex flex-1 gap-4 items-center group box-border hover:bg-sand-50 p-2 -m-2 rounded-2xl"
+      className="box-border flex items-center flex-1 gap-4 p-2 -m-2 group hover:bg-sand-50 rounded-2xl"
     >
       <div className="w-[50px] h-[50px] bg-sand group-hover:bg-sand-dark rounded-lg shrink-0"></div>
       <div>
-        <p className="text-md font-medium text-primary leading-5">
+        <p className="font-medium leading-5 text-md text-primary">
           {props.title}
         </p>
-        <p className="text-sm text-secondary leading-5">{props.description}</p>
+        <p className="text-sm leading-5 text-secondary">{props.description}</p>
       </div>
     </Link>
   );
@@ -44,8 +45,8 @@ export default function Home(
   const hasApps = props.apps.length > 0;
   return (
     <PageWrapper>
-      <section className="mt-7 w-full">
-        <h1 className="text-5xl font-display font-medium text-primary mb-1">
+      <section className="w-full mt-7">
+        <h1 className="mb-1 text-5xl font-medium font-display text-primary">
           Let&apos;s get building
         </h1>
         <p className="text-lg text-secondary">
@@ -53,28 +54,33 @@ export default function Home(
         </p>
       </section>
 
-      <section className="mt-16 w-full">
-        <h1 className="text-3xl font-display font-medium mb-0 text-primary">
+      <section className="w-full mt-16">
+        <h1 className="mb-0 text-3xl font-medium font-display text-primary">
           Example apps
         </h1>
         <p className="text-md text-secondary">
           Fully fledged apps to give you a sense of Keel in action
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full mt-5">
+        <div className="grid w-full grid-cols-1 gap-6 mt-5 sm:grid-cols-2 md:grid-cols-3">
           {hasApps ? (
-            props.apps.map((s) => (
+            props.apps.map((s, i) => (
               <Link
                 href={`/apps/${s.slug}`}
                 key={s.slug}
                 className="min-h-[150px] grid gap-4 bg-sand hover:bg-sand-dark rounded-lg p-5 flex-1"
               >
-                <img
-                  alt={s.title}
+                <Image
+                  alt={
+                    `A screenshot of the ${s.title} example` || "An example app"
+                  }
+                  loading={i === 0 ? "eager" : "lazy"}
+                  width={288}
+                  height={160}
                   src={`/api/app-image?s=${s.slug}`}
                   className="w-full rounded shadow"
                 />
-                <p className="text-lg font-semibold text-primary leading-none">
+                <p className="text-lg font-semibold leading-none text-primary">
                   {s.title}
                 </p>
               </Link>
@@ -87,15 +93,15 @@ export default function Home(
         </div>
       </section>
 
-      <section className="mt-16 w-full">
-        <h1 className="text-3xl font-display font-medium mb-0 text-primary">
+      <section className="w-full mt-16">
+        <h1 className="mb-0 text-3xl font-medium font-display text-primary">
           Guides
         </h1>
         <p className="text-md text-secondary">
           Practical examples for using Keel
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full mt-5 ">
+        <div className="grid w-full grid-cols-1 gap-6 mt-5 md:grid-cols-2 lg:grid-cols-3 ">
           {props.guides.general.map((entry, i) => (
             <CategoryBlock
               key={i}
@@ -106,9 +112,9 @@ export default function Home(
           ))}
         </div>
 
-        <h4 className="text-md font-medium text-secondary mt-8">Features</h4>
+        <h2 className="mt-8 font-medium text-md text-secondary">Features</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full mt-4">
+        <div className="grid w-full grid-cols-1 gap-6 mt-4 md:grid-cols-2 lg:grid-cols-3">
           {props.guides.features.map((entry, i) => (
             <CategoryBlock
               key={i}
@@ -120,15 +126,15 @@ export default function Home(
         </div>
       </section>
 
-      <section className="mt-16 w-full">
-        <h1 className="text-3xl font-display font-medium mb-0 text-primary">
+      <section className="w-full mt-16">
+        <h1 className="mb-0 text-3xl font-medium font-display text-primary">
           Patterns
         </h1>
         <p className="text-md text-secondary">
           Schema examples for common usage patterns
         </p>
 
-        <div className="flex flex-col gap-4 w-full mt-6">
+        <div className="flex flex-col w-full gap-4 mt-6">
           {props.patterns.slice(0, 10).map((entry, i) => (
             <EntryListRow urlRoot="patterns" entry={entry} key={i} />
           ))}

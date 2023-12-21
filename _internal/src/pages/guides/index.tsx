@@ -3,6 +3,7 @@ import { EntryListRow } from "@/components/EntryListRow";
 import { PageWrapper } from "@/layouts/Wrapper";
 import { loadData } from "@/lib/data";
 import { Header } from "@/components/Header";
+import Head from "next/head";
 
 export async function getStaticProps() {
   const data = await loadData();
@@ -17,6 +18,9 @@ export default function Page(
 ) {
   return (
     <PageWrapper>
+      <Head>
+        <title>Guides | Keel Examples</title>
+      </Head>
       <Header
         title={"All guides"}
         description="Guides to help you get started with Keel"
@@ -24,7 +28,7 @@ export default function Page(
 
       <hr />
 
-      <div className="flex flex-col gap-4 w-full mt-6">
+      <div className="flex flex-col w-full gap-4 mt-6">
         {props.entries.map((entry, i) => (
           <EntryListRow
             urlRoot={"guides/" + entry.tags[0]}

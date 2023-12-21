@@ -17,14 +17,14 @@ const config: Config = {
       textColor: {
         primary: "rgba(20, 9, 0, 0.84)",
         body: "rgba(20, 9, 0, 0.64)",
-        secondary: "rgba(0, 0, 0, 0.50)",
+        secondary: "#666",
       },
       colors: {
         sand: "#EFE7DD",
         "sand-50": "rgba(239, 231, 221, 0.50)",
         "sand-25": "rgba(239, 231, 221, 0.25)",
         "sand-dark": "#E5D9CA",
-        primary: 'rgb(19, 114, 95)',
+        primary: "rgb(19, 114, 95)",
       },
       boxShadow: {
         1: "0px 1px 1px rgba(0, 0, 0, 0.01), 0px 1px 1px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.14), 0px 0px 1px rgba(0, 0, 0, 0.24), 0px 0px 0px rgba(0, 0, 0, 0.27), 0px 0px 0px rgba(0, 0, 0, 0.28), 0px 2px 3px rgb(0 0 0 / 5%)",

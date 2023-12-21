@@ -4,19 +4,9 @@ import { flatGuideCategories, guideCategories } from "@/lib/staticData";
 import { loadData } from "@/lib/data";
 import { EntryListRow } from "@/components/EntryListRow";
 import { Header } from "@/components/Header";
+import Head from "next/head";
 
 export const getStaticPaths = (async () => {
-  //   const data = await loadData();
-
-  //   const tags = data["guides"].reduce((uniqueTags: string[], guide) => {
-  //     guide.tags.forEach((tag) => {
-  //       if (!uniqueTags.includes(tag)) {
-  //         uniqueTags.push(tag);
-  //       }
-  //     });
-  //     return uniqueTags;
-  //   }, []);
-
   return {
     paths: flatGuideCategories.map((d) => ({
       params: {
@@ -58,11 +48,14 @@ export default function Page(
 ) {
   return (
     <PageWrapper>
+      <Head>
+        <title>{props.title} | Keel Examples</title>
+      </Head>
       <Header title={props.title} description={props.description} />
 
       <hr />
 
-      <div className="flex flex-col gap-4 w-full mt-6">
+      <div className="flex flex-col w-full gap-4 mt-6">
         {props.entries.map((entry, i) => (
           <EntryListRow urlRoot={props.tag} entry={entry} key={i} />
         ))}
