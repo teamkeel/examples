@@ -5,6 +5,7 @@ import { Tag } from "../../../components/Tag";
 import { Markdown } from "@/components/Markdown";
 import { ContentLayout } from "@/layouts/ContentLayout";
 import { Header } from "@/components/Header";
+import Head from "next/head";
 
 export const getStaticPaths = (async () => {
   const data = await loadData();
@@ -40,6 +41,9 @@ export default function Page(
 ) {
   return (
     <PageWrapper>
+      <Head>
+        <title>{props.title} | Keel Examples</title>
+      </Head>
       <ContentLayout.Root>
         <ContentLayout.Aside>
           <div className="flex gap-3 mb-4">
