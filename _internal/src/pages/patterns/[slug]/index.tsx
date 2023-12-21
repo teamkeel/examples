@@ -7,6 +7,7 @@ import { PageWrapper } from "@/layouts/Wrapper";
 import { Tag } from "../../../components/Tag";
 import { Markdown } from "@/components/Markdown";
 import { ContentLayout } from "@/layouts/ContentLayout";
+import Head from "next/head";
 
 export const getStaticPaths = (async () => {
   const data = await loadData();
@@ -42,6 +43,9 @@ export default function Page(
 ) {
   return (
     <PageWrapper>
+      <Head>
+        <title>{props.title} | Keel Examples</title>
+      </Head>
       <div className="flex w-full max-w-6xl mb-7">
         <Link href="/patterns" className="text-neutral-600 text-md">
           &#8249; All patterns
