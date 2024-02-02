@@ -22,8 +22,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@teamkeel/client-react": "^0.365.18",
     "@teamkeel/client-react-query": "^0.365.18",
-    "@teamkeel/functions-runtime": "^0.370.1",
-    "@teamkeel/testing-runtime": "^0.370.1",
+    "@teamkeel/functions-runtime": "^0.377.1",
+    "@teamkeel/testing-runtime": "^0.377.1",
     "autoprefixer": "10.4.14",
     "browser-or-node": "^2.1.1",
     "class-variance-authority": "^0.6.1",
@@ -65,7 +65,7 @@
     "prettier": "^3.0.3",
     "tsx": "^3.12.6",
     "typescript": "^5.2.2",
-    "vitest": "^0.27.2",
+    "vitest": "^0.34.6",
     "windy-radix-palette": "^0.6.1",
     "windy-radix-typography": "^0.2.1"
   }

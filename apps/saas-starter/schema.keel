@@ -127,6 +127,6 @@ model Invitation {
 }
 
 job PruneDatabase {
-    @schedule("0 0 ? * * *")
+    @schedule("0 0 * * *")
     @permission(expression: true)
 }

@@ -12,7 +12,7 @@ export default async function TeamSettings({
   params: { teamId: string };
 }) {
   const teamName = (
-    await createClient().api.queries.getTeam({ id: params.teamId })
+    await (await createClient()).api.queries.getTeam({ id: params.teamId })
   ).data?.name;
 
   return (

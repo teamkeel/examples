@@ -9,7 +9,7 @@ type Props = { params: { teamId: string } };
 
 export default async function Page({ params }: Props) {
   const { teamId } = params;
-  const keelClient = createClient();
+  const keelClient = await createClient();
   const firstDocument = (
     await keelClient.api.queries.listDocuments({
       where: { team: { id: { equals: teamId } } },
