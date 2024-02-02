@@ -2,3 +2,10 @@ secrets:
   - name: CLOUDINARY_CLOUD_NAME
   - name: CLOUDINARY_API_KEY
   - name: CLOUDINARY_API_SECRET
+  - name: AUTH_PROVIDER_SECRET_GOOGLE_CLIENT
+auth:
+  redirectUrl: http://localhost:3000/login/callback
+  providers:
+    - type: google
+      name: google_client
+      clientId: 950417749188-1i8eqpabj3gpm4fubte9cpfkrtvlv695.apps.googleusercontent.com

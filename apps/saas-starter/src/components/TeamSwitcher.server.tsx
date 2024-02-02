@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const TeamSwitcherServer = async ({ teamId }: Props) => {
-  const keelClient = createClient();
+  const keelClient = await createClient();
   const teams =
     (await keelClient.api.queries.listTeams()).data?.results.map((team) => ({
       id: team.id,

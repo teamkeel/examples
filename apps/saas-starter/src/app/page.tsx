@@ -8,8 +8,8 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/util/createClient';
 
 export default async function Signup() {
-  const keelClient = createClient();
-  if (keelClient.ctx.isAuthenticated) {
+  const keelClient = await createClient();
+  if (await keelClient.auth.isAuthenticated()) {
     const response = await keelClient.api.queries.listTeams();
     if (response.data && response.data.results.length) {
       redirect(`/${response.data.results[0].id}`);

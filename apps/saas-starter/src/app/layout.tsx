@@ -15,7 +15,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const keelClient = createClient();
+  const keelClient = await createClient();
   const path = headers().get('x-pathname'); // <- Added by middleware.ts because Next doesn't give us the current pathname
   try {
     const me = await keelClient.api.queries.me();

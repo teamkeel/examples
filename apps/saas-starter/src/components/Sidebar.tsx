@@ -11,7 +11,7 @@ type Props = { teamId?: string };
 
 export async function Sidebar(props: Props) {
   const { teamId } = props;
-  const keelClient = createClient();
+  const keelClient = await createClient();
 
   const me = (await keelClient.api.queries.me()).data!;
   const documents = teamId
