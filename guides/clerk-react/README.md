@@ -1,46 +1,36 @@
-# Clerk auth + Keel
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-This example provides a minimal setup to use Clerk auth with Keel.
+## Getting Started
 
-Process overview
+First, run the development server:
 
-1. Login with Clerk
-1. Exchange Clerk token for Keel token
-1. Make Keel requests with the Keel token
-
-## Clerk setup
-
-Out of the box Clerk doesn't completely follow the OpenID Connect spec so you need to use a custom JWT template on the clerk side.
-
-In the Clerk console, create a new JWT template and set the following claims.
-
-N.B. The `aud` claim can be any string but just needs to match the value in your `keelconfig.yaml`
-
-```json
-{
-  "aud": "keel",
-  "email": "{{user.primary_email_address}}",
-  "email_verified": "{{user.email_verified}}"
-}
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-When fetching a Clerk token, use that new JWT template name. In this example this is happening at `./src/keel/index.tsx:37`
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```js
-getToken({ template: "keel" });
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Finally, rename `.env.example` to `.env` and set your `VITE_REACT_APP_CLERK_PUBLISHABLE_KEY`
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Keel setup
+## Learn More
 
-Add Clerk as an auth provider in your `keelconfig.yaml` file
+To learn more about Next.js, take a look at the following resources:
 
-```yaml
-auth:
-  providers:
-    - type: oidc
-      name: clerk
-      issuerUrl: "https://artistic-ostrich-8.clerk.accounts.dev" # Your Clerk url
-      clientId: "keel" # Must match the Clerk JWT aud claim
-```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
