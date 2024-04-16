@@ -1,40 +1,14 @@
-import {
-  ClerkProvider,
-  RedirectToSignIn,
-  SignedIn,
-  SignedOut,
-} from "@clerk/clerk-react";
-import { KeelProvider, useKeel } from "./keel";
+"use client"
 import { useCallback, useEffect, useState } from "react";
-import { Thing } from "./keel/keelClient";
+import { Thing } from "../../keel/keelClient";
+import { useKeel } from "./keel";
 
-const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
-
-if (!clerkPubKey) {
-  throw new Error("Missing Publishable Key");
-}
-
-function App() {
-  return (
-    <ClerkProvider publishableKey={clerkPubKey}>
-      <KeelProvider>
-        <SignedIn>
-          <Welcome />
-        </SignedIn>
-        <SignedOut>
-          <RedirectToSignIn />
-        </SignedOut>
-      </KeelProvider>
-    </ClerkProvider>
-  );
-}
-
-function Welcome() {
+export default function Home() {
   const [things, setThings] = useState<Thing[]>([]);
-  const { keel, authenticated } = useKeel();
-
+  const { api, auth } = useKeel()
+  const isAuthenticated = auth.isAuthenticated;
   const fetchThings = useCallback(() => {
-    keel?.api.queries.myThings().then((res) => {
+    api.queries.myThings().then((res) => {
       if (res.error) {
         console.error(res.error);
       }
@@ -42,16 +16,16 @@ function Welcome() {
         setThings(res.data.results);
       }
     });
-  }, [keel]);
+  }, [api]);
 
   useEffect(() => {
-    if (!authenticated) return;
+    if (!isAuthenticated) return;
     fetchThings();
-  }, [authenticated, fetchThings]);
+  }, [isAuthenticated, fetchThings]);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    keel?.api.mutations
+    api.mutations
       .createThing({
         name: e.currentTarget.thing.value,
       })
@@ -67,9 +41,7 @@ function Welcome() {
           <li key={thing.id}>{thing.name}</li>
         ))}
       </ul>
-
       <hr />
-
       <form onSubmit={handleSubmit}>
         <div className="fields">
           <input name="thing" type="text" />
@@ -79,5 +51,3 @@ function Welcome() {
     </>
   );
 }
-
-export default App;
