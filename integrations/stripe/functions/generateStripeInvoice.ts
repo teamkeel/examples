@@ -12,6 +12,10 @@ export default GenerateStripeInvoice(async (ctx, inputs) => {
     if (!order) {
       throw new Error(`Order data not found for ID ${inputs.id}`);
     }
+    // Check if the payment link has already been created
+    if (order.stripePaymentLink) {
+      throw new Error("Payment link already generated for this order");
+    }
     // Error if no corresponding Stripe ID for the customer
     const customer = await models.customer.findOne({ id: order.customerId });
     // Check the customer exists
