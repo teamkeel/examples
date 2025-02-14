@@ -39,6 +39,7 @@ export default GenerateStripePaymentLink(async (ctx, inputs) => {
     const where = { id: inputs.id };
     const values = { stripePaymentLink: paymentLink.url };
     await models.order.update(where, values);
+    return paymentLink.url;
   } catch (error) {
     throw error;
   }
