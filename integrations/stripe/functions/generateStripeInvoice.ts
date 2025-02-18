@@ -13,7 +13,7 @@ export default GenerateStripeInvoice(async (ctx, inputs) => {
       throw new Error(`Order data not found for ID ${inputs.id}`);
     }
     // Check if the payment link has already been created
-    if (order.stripePaymentLink) {
+    if (order.stripeHostedPaymentUrl) {
       throw new Error("Payment link already generated for this order");
     }
     // Error if no corresponding Stripe ID for the customer
@@ -93,7 +93,7 @@ export default GenerateStripeInvoice(async (ctx, inputs) => {
     const where = { id: inputs.id };
     const values = {
       stripeInvoiceId: stripeInvoice.id,
-      stripePaymentLink: stripeInvoiceFinalised.hosted_invoice_url,
+      stripeHostedPaymentUrl: stripeInvoiceFinalised.hosted_invoice_url,
     };
     const orderUpdate = await models.order.update(where, values);
     return stripeInvoiceFinalised.hosted_invoice_url;

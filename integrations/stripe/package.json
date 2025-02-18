@@ -1,16 +1,16 @@
 {
   "name": ".",
   "dependencies": {
-    "@teamkeel/functions-runtime": "^0.398.0",
-    "@teamkeel/testing-runtime": "^0.398.0",
+    "@teamkeel/functions-runtime": "^0.406.2",
+    "@teamkeel/testing-runtime": "^0.406.2",
     "kysely": "^0.27.4",
     "node-fetch": "^3.3.2",
     "stripe": "^17.6.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.18",
+    "@types/node": "^22.13.5",
     "tsx": "^4.11.0",
     "typescript": "^5.3.3",
-    "vitest": "^0.34.6"
+    "vitest": "^3.0.7"
   }
 }

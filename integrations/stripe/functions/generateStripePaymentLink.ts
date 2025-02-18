@@ -13,7 +13,7 @@ export default GenerateStripePaymentLink(async (ctx, inputs) => {
       throw new Error(`Order data not found for ID ${inputs.id}`);
     }
     // Check if the payment link has already been created
-    if (order.stripePaymentLink) {
+    if (order.stripeHostedPaymentUrl) {
       throw new Error("Payment link already generated for this order");
     }
     const stripeSecretKey = ctx.secrets.STRIPE_SECRET_KEY;
@@ -46,7 +46,7 @@ export default GenerateStripePaymentLink(async (ctx, inputs) => {
     });
     // Update the order with the new payment link
     const where = { id: inputs.id };
-    const values = { stripePaymentLink: paymentLink.url };
+    const values = { stripeHostedPaymentUrl: paymentLink.url };
     await models.order.update(where, values);
     return paymentLink.url;
   } catch (error) {
