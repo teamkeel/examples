@@ -1,0 +1,110 @@
+model Customer {
+    fields {
+        name Text
+        addressLineOne Text
+        addressLineTwo Text
+        addressCity Text
+        addressState Text
+        addressPostalCode Text
+        addressCountry Text @default("US")
+        stripeCustomerId Text?
+    }
+
+    actions {
+        create createCustomer() with (
+            name,
+            addressLineOne,
+            addressLineTwo,
+            addressCity,
+            addressState,
+            addressPostalCode,
+        )
+        get getCustomer(id)
+        list listCustomer()
+        delete deleteCustomer(id)
+    }
+
+    @permission(
+        expression: true,
+        actions: [create, get, list, delete]
+    )
+
+    @on(
+        [create],
+        createStripeCustomer
+    )
+}
+
+model Product {
+    fields {
+        name Text
+        priceDollars Decimal
+        stripeProductId Text?
+        stripePriceId Text?
+    }
+
+    actions {
+        create createProduct() with (name, priceDollars)
+        get getProduct(id)
+        list listProduct()
+        delete deleteProduct(id)
+    }
+
+    @permission(
+        expression: true,
+        actions: [create, get, list, delete]
+    )
+
+    @on(
+        [create],
+        createStripeProduct
+    )
+}
+
+model Order {
+    fields {
+        customer Customer
+        orderItems OrderItem[]
+        stripeInvoiceId Text?
+        stripeHostedPaymentUrl Text?
+    }
+
+    actions {
+        create createOrder() with (
+            customer.id,
+            orderItems.product.id,
+            orderItems.quantity,
+        )
+        get getOrder(id)
+        list listOrder()
+        delete deleteOrder(id)
+        write generateStripePaymentLink(id) returns (Any)
+        write generateStripeInvoice(id) returns (Any)
+    }
+
+    @permission(
+        expression: true,
+        actions: [create, get, list, delete]
+    )
+}
+
+model OrderItem {
+    fields {
+        product Product
+        order Order
+        quantity Number
+    }
+
+    actions {
+        create createOrderItem() with (product.id, order.id, quantity)
+        get getOrderItem(id)
+        list listOrderItem(order.id) {
+            @embed(product)
+        }
+    }
+
+    @permission(
+        expression: true,
+        actions: [create, get, list]
+    )
+}
