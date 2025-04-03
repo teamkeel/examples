@@ -1,0 +1,9 @@
+model MyModel {
+    actions {
+        write myAction() returns (MyActionResponse)
+    }
+}
+
+message MyActionResponse {
+    hello Text
+}
