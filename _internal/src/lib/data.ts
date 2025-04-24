@@ -56,7 +56,7 @@ export const loadData = async () => {
 
 export const loadDirectory = async (
   baseDir: string,
-  schema: ZodObject<any>
+  schema: ZodObject<any>,
 ) => {
   const directories = await fs.readdir(process.cwd() + "/../" + baseDir, {
     withFileTypes: true,
@@ -107,7 +107,9 @@ export const loadDirectory = async (
       entry.files = entry.files.concat(result);
     }
 
-    const readmeFile = entry.files.find((file) => file.name.toLowerCase() === "readme.md");
+    const readmeFile = entry.files.find(
+      (file) => file.name.toLowerCase() === "readme.md",
+    );
     if (readmeFile) {
       const data = fm<{
         tags: string;
@@ -149,12 +151,12 @@ export const loadDirectory = async (
 const loadFiles = async (
   rootPath: string,
   dir: string,
-  extension: string[]
+  extension: string[],
 ) => {
   let files = [];
   try {
     files = (await fs.readdir(rootPath + dir)).filter((file) =>
-      extension.some((ext) => file.toLowerCase().endsWith(ext))
+      extension.some((ext) => file.toLowerCase().endsWith(ext)),
     );
   } catch (err) {
     // Skip for directories that don't exist. E.g projects that don't have functions
@@ -202,14 +204,14 @@ const highlightFiles = async (entry: Entry) => {
         try {
           highlightedFile.highlightedContent = await highlight(
             file.contents,
-            getExtension(file.name)
+            getExtension(file.name),
           );
         } catch (error) {
           console.error(`Failed to highlight file: ${file.name}`, error);
           return file;
         }
         return highlightedFile;
-      })
+      }),
   );
 
   return {

@@ -6,6 +6,7 @@ import { Markdown } from "@/components/Markdown";
 import { ContentLayout } from "@/layouts/ContentLayout";
 import { Header } from "@/components/Header";
 import Head from "next/head";
+import Image from "next/image";
 
 export const getStaticPaths = (async () => {
   const data = await loadData();
@@ -37,7 +38,7 @@ export async function getStaticProps(context: {
 }
 
 export default function Page(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   return (
     <PageWrapper>
@@ -47,17 +48,15 @@ export default function Page(
       <ContentLayout.Root>
         <ContentLayout.Aside>
           <div className="flex gap-3 mb-4">
-            {props?.tags?.map((t) => (
-              <Tag key={t}>{t}</Tag>
-            ))}
+            {props?.tags?.map((t) => <Tag key={t}>{t}</Tag>)}
           </div>
           <Header title={props.title!} />
           <Markdown>{props?.readme}</Markdown>
         </ContentLayout.Aside>
         <ContentLayout.Main>
           <figure className="grid gap-2 p-2 text-sm text-center border rounded border-sand bg-sand">
-            <img
-              alt={props.title}
+            <Image
+              alt={props.title || ''}
               className="rounded shadow"
               src={`/api/app-image?s=${encodeURIComponent(props.slug)}`}
             />

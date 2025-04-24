@@ -20,7 +20,7 @@ export const getStaticPaths = (async () => {
         slug: d.slug,
         category: t,
       },
-    }))
+    })),
   );
 
   return {
@@ -46,7 +46,7 @@ export async function getStaticProps(context: {
 }
 
 export default function Page(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   return (
     <PageWrapper>
@@ -61,9 +61,7 @@ export default function Page(
       <ContentLayout.Root>
         <ContentLayout.Aside>
           <div className="flex gap-3 mb-4">
-            {props?.tags?.map((t) => (
-              <Tag key={t}>{t}</Tag>
-            ))}
+            {props?.tags?.map((t) => <Tag key={t}>{t}</Tag>)}
           </div>
           <Markdown>{props?.readme}</Markdown>
         </ContentLayout.Aside>

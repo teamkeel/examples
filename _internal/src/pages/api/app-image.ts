@@ -4,7 +4,7 @@ import { join } from "path";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const appSlug = req.query.s;
   const screenshot = join(
@@ -12,7 +12,7 @@ export default async function handler(
     "..",
     "apps",
     appSlug as string,
-    "screenshot.jpg"
+    "screenshot.jpg",
   );
   const image = await readFile(screenshot);
   res.setHeader("Content-Type", "image/png");

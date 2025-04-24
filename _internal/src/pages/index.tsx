@@ -40,7 +40,7 @@ const CategoryBlock = (props: {
 };
 
 export default function Home(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   const hasApps = props.apps.length > 0;
   return (

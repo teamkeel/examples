@@ -14,7 +14,7 @@ export async function getStaticProps() {
 }
 
 export default function Page(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   return (
     <PageWrapper>

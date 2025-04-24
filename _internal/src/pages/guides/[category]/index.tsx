@@ -23,7 +23,7 @@ export async function getStaticProps(context: {
   };
 }) {
   const category = flatGuideCategories.find(
-    (c) => c.tag == context.params.category
+    (c) => c.tag == context.params.category,
   );
 
   if (!category) {
@@ -35,7 +35,7 @@ export async function getStaticProps(context: {
   const data = await loadData();
 
   const guides = data.guides.filter((guide) =>
-    guide.tags.includes(category.tag)
+    guide.tags.includes(category.tag),
   );
 
   return {
@@ -44,7 +44,7 @@ export async function getStaticProps(context: {
 }
 
 export default function Page(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   return (
     <PageWrapper>
