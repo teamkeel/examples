@@ -6,6 +6,7 @@ import { PageWrapper } from "@/layouts/Wrapper";
 import { Tag } from "../../../../components/Tag";
 import { Markdown } from "@/components/Markdown";
 import { ContentLayout } from "@/layouts/ContentLayout";
+import Head from "next/head";
 
 export const getStaticPaths = (async () => {
   const data = await loadData();
@@ -19,7 +20,7 @@ export const getStaticPaths = (async () => {
         slug: d.slug,
         category: t,
       },
-    }))
+    })),
   );
 
   return {
@@ -45,10 +46,13 @@ export async function getStaticProps(context: {
 }
 
 export default function Page(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   return (
     <PageWrapper>
+      <Head>
+        <title>{props.title} | Keel Examples</title>
+      </Head>
       <div className="flex w-full max-w-6xl mb-7">
         <Link href="/guides" className="text-neutral-600 text-md">
           &#8249; All guides
@@ -57,9 +61,7 @@ export default function Page(
       <ContentLayout.Root>
         <ContentLayout.Aside>
           <div className="flex gap-3 mb-4">
-            {props?.tags?.map((t) => (
-              <Tag key={t}>{t}</Tag>
-            ))}
+            {props?.tags?.map((t) => <Tag key={t}>{t}</Tag>)}
           </div>
           <Markdown>{props?.readme}</Markdown>
         </ContentLayout.Aside>

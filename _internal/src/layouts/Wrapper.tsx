@@ -7,7 +7,7 @@ export const PageWrapper = (props: PropsWithChildren) => {
     <div className="flex flex-col items-center justify-center pt-4">
       <div className="flex flex-col items-baseline w-full max-w-6xl mb-7">
         <section className="mb-8">
-          <Link href="/">
+          <Link title="Keel Logo" href="/">
             <Logo height={32} />
           </Link>
         </section>
